@@ -33,29 +33,38 @@ app.use("/styles", sass({
   debug: true,
   outputStyle: 'expanded'
 }));
+
+
 app.use(express.static("public"));
+
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
+
+let home = false;
 // Home page
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/index", (req, res) => {
+  let templateVars =  {path: req.route.path};
+  res.render("index", templateVars);
 });
 
 // Menu page
 app.get("/menu", (req, res) => {
-  res.render("menu");
+  let templateVars =  {path: req.route.path};
+  res.render("menu", templateVars);
 });
 
 // Checkout page
 app.get("/checkout/:id", (req, res) => {
-  res.render("checkout");
+  let templateVars =  {path: req.route.path};
+  res.render("checkout", templateVars);
 });
 
 // Confirmation page
 app.get("/checkout/:id/confirm", (req, res) => {
-  res.render("confirm");
+  let templateVars =  {path: req.route.path};
+  res.render("confirm", templateVars);
 });
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
