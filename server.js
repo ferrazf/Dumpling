@@ -43,6 +43,20 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// Menu page
+app.get("/menu", (req, res) => {
+  res.render("index");
+});
+
+// Checkout page
+app.get("/checkout/:id", (req, res) => {
+  res.render("index");
+});
+
+// Confirmation page
+app.get("/checkout/:id/confirm", (req, res) => {
+  res.render("index");
+});
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
