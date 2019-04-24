@@ -13,6 +13,6 @@ twilioClient.messages.create({
     body: message
 })
 .then((message) => console.log(message.sid));
-g
+
 });
 
