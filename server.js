@@ -45,17 +45,17 @@ app.get("/", (req, res) => {
 
 // Menu page
 app.get("/menu", (req, res) => {
-  res.render("index");
+  res.render("menu");
 });
 
 // Checkout page
 app.get("/checkout/:id", (req, res) => {
-  res.render("index");
+  res.render("checkout");
 });
 
 // Confirmation page
 app.get("/checkout/:id/confirm", (req, res) => {
-  res.render("index");
+  res.render("confirm");
 });
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
