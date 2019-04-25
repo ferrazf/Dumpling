@@ -14,6 +14,7 @@
     var defaults = {
         cart: [],
         addtoCartClass: '.sc-add-to-cart',
+        removeFromCartClass: '.sc-remove-from-cart',
         cartProductListClass: '.cart-products-list',
         totalCartCountClass: '.total-cart-count',
         totalCartCostClass: '.total-cart-cost',
@@ -61,6 +62,7 @@
                                             </div>\n\
                                             <div class='cart-checkout'>\n\
                                             <form action='#'>\n\
+                                                <textarea></textarea>\n\
                                                 <button type='submit' class='btn btn-primary'>Proceed To Checkout</button>\n\
                                             </form>\n\
                                         </div>\n\
@@ -79,6 +81,7 @@
         },
         _setEvents: function () {
             var mi = this;
+
             $(this.options.addtoCartClass).on("click", function (e) {
                 e.preventDefault();
                 var name = $(this).attr("data-name");
@@ -89,14 +92,24 @@
 
             $(this.options.showcartID).on("change", this.options.itemCountClass, function (e) {
                 var ci = this;
-        e.preventDefault();
-        var count = $(this).val();
-        var name = $(this).attr("data-name");
-        var cost = Number($(this).attr("data-price"));
-        mi._removeItemfromCart(name, cost, count);
-        mi._updateCartDetails();
-    });
+                e.preventDefault();
+                var count = $(this).val();
+                var name = $(this).attr("data-name");
+                var cost = Number($(this).attr("data-price"));
+                mi._removeItemfromCart(name, cost, count);
+                mi._updateCartDetails();
+            });
 
+            $(this.options.showcartID).on("click", this.options.removeFromCartClass,function (e) {
+                var ci = this;
+                e.preventDefault();
+                var count = 0;
+                var name = $(this).attr("data-name");
+                var cost = Number($(this).attr("data-price"));
+                mi._removeItemfromCart(name, cost, count);
+                console.log("check1");
+                mi._updateCartDetails();
+            });
         },
         /* Helper Functions */
         _addItemToCart: function (name, price, count) {
@@ -114,11 +127,15 @@
         },
         _removeItemfromCart: function (name, price, count) {
             for (var i in this.cart) {
+                console.log(count);
                 if (this.cart[i].name === name) {
+
                     var singleItemCost = Number(price / this.cart[i].count);
                     this.cart[i].count = count;
                     this.cart[i].price = singleItemCost * count;
+
                     if (count == 0) {
+
                         this.cart.splice(i, 1);
                     }
                     break;
@@ -147,6 +164,9 @@
                             <input type='number' class='quantity form-control item-count' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' min='0' value=" + cartArray[i].count + " name='number'>\n\
                        </div>\n\
                        <div class='quantity-am'><i class='fa fa-dollar'>" + cartArray[i].price + "</i></div>\n\
+                       </div>\n\
+                       <div class='add-button'>\n\
+                            <button class='btn btn-primary sc-remove-from-cart' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "type='submit'>x</button>\n\
                        </div>";
             }
             return output;
