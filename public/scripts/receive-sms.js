@@ -1,4 +1,5 @@
 require('dotenv').config();
+const sendSMS = require('./send-sms');
 
 const http = require("http");
 const bodyParser = require('body-parser');
@@ -6,7 +7,7 @@ const express = require("express");
 const twilio = require("twilio");
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
-const knexConfig  = require("../.././knexfile");
+const knexConfig  = require("../.././knexfile"); 
 const knex        = require("knex")
 ({
     client: 'pg',
@@ -25,10 +26,14 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.post('/', (req, res) => {
-    let eta = req.body["Body"];
+    let reply = req.body["Body"].split(","); // reply format will be phonenumber (without +1) + ',' + wait time
+    let num = reply[0].trim();
+    let eta = reply[1].trim();
     let inputArray = [{etaminutes: eta}];
-    knex('orders').insert(inputArray)
-    .then(() =>{console.log(typeof(eta));})
+    knex('orders').insert(inputArray).where({
+        phonenumber: num
+    })
+    .then(sendSMS( "+1" + num, `You order will be ready in ${eta} minutes.` )) // add +1 at the beginning of the phone number
     .catch((err) => {
       console.log('err ', err);
     })
@@ -49,3 +54,15 @@ http.createServer(app).listen(1337, () => {
 // ngrok http 1337 on a separated terminal and get the http server address
 // save that address to https://www.twilio.com/console/phone-numbers/PN20a898aa406518a1d5df602f824d8a60
 // to update the webhook, http post message incoming
+
+/*
+backup plan for filling into the db
+
+let eta = req.body["Body"];
+let inputArray = [{etaminutes: eta}];
+let num = knex.select("phonenumber").from("orders").whereNull("etaminutes")
+knex("orders").insert(inputArray).whereNull("etaminutes")
+.then(sendSMS(num, `You order will be ready in ${eta} minutes.`))
+.catch((err) => {
+      console.log('err ', err);
+*/
