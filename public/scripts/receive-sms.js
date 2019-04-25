@@ -1,16 +1,39 @@
+require('dotenv').config();
+
 const http = require("http");
 const bodyParser = require('body-parser');
 const express = require("express");
 const twilio = require("twilio");
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
+const knexConfig  = require("../.././knexfile");
+const knex        = require("knex")
+({
+    client: 'pg',
+    version: '9.5',
+    connection: knexConfig["development"]["connection"]
+  });
+
+const morgan      = require('morgan');
+const knexLogger  = require('knex-logger');
+
 const app = express();
+app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(express.static("public"));
+app.use(morgan('dev'));
+app.use(knexLogger(knex));
 
 app.post('/', (req, res) => {
-
+    let eta = req.body["Body"];
+    let inputArray = [{etaminutes: eta}];
+    knex('orders').insert(inputArray)
+    .then(() =>{console.log(typeof(eta));})
+    .catch((err) => {
+      console.log('err ', err);
+    })
     
-    console.log("req.body, ", req.body["Body"]);
+    // console.log("req.body, ", req.body["Body"]);
 
     // const twiml = new MessagingResponse();
 
