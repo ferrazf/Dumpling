@@ -99,31 +99,41 @@
                     for (let index of mi.cart) {
                     msgToClient.push(`${index["name"]}: ${index["count"]} servering(s)`);
                     }
-                    console.log(msgToClient.join(" "));
                     
                     $.ajax({
-                    type: "POST",
-                    url: "/twilio/send",
-                    data: {
-                        msg: msgToClient.join(" ") || ""
-                    },
-                    dataType: "object",
-                    })
-                    .done($(".phonenum").val(""))
-                    .done(mi._clearCart())
-                    .done(mi._updateCartDetails());
+                        type: "POST",
+                        url: "/order",
+                        data: {
+                            order: mi.cart,
+                            phonenum: $(".phonenum").val()
+                        },
+                        dataType: "object",
+                        })
+                        .then(
+                            console.log("what are you doing")
+
+                    // $.ajax({
+                    // type: "POST",
+                    // url: "/twilio/send",
+                    // data: {
+                    //     msg: msgToClient.join(" ") || ""
+                    // },
+                    // dataType: "object",
+                    // })
+                    // .then($(".phonenum").val(""))
+                    // .then(mi._clearCart())
+                    // .then(mi._updateCartDetails())
+
+                            
+                        ).then();
+                     
+                    
+                    
                 
                 } else {
                     alert("Please enter a valid phone number.");
                 };
-                
-
-                // mi.cart.forEach((order) => {
-                //     console.log(`${order["name"]}: ${order["count"]} servering(s)`);
-                // });
-
-                
-
+         
             });
 
             $(this.options.addtoCartClass).on("click", function (e) {
