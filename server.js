@@ -66,11 +66,6 @@ app.get("/checkout/:id/confirm", (req, res) => {
   res.render("confirm", templateVars);
 });
 
-app.post("/order", (req, res) => {
-  console.log("order, ", req.body["order"]);
-  console.log("num, ", req.body["phonenum"]);
-  res.send("OK");
-});
 
 // Inform owner about the coming order
 app.post('/twilio/send', (req, res) => {
