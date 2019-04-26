@@ -16,6 +16,7 @@ const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const sendSMS = require('./public/scripts/send-sms');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -66,6 +67,26 @@ app.get("/checkout/:id/confirm", (req, res) => {
   let templateVars =  {path: req.route.path};
   res.render("confirm", templateVars);
 });
+
+app.post('/twilio/send', (req, res) => {
+  sendSMS(process.env.OWNER_NUMBER, req.body["msg"]);
+  res.send("OK");
+});
+
+app.post('/twilio/webhook', (req, res) => {
+  let reply = req.body["Body"].split(","); // reply format will be phonenumber (without +1) + ',' + wait time
+  let num = reply[0].trim();
+  let eta = reply[1].trim();
+  
+  knex('orders').update({'etaminutes': eta}).where({
+      phonenumber: num
+  })
+  .then(sendSMS( "+1" + num, `You order will be ready in about ${eta} minutes.` )) // add +1 at the beginning of the phone number
+  .catch((err) => {
+    console.log('err ', err);
+  })
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
