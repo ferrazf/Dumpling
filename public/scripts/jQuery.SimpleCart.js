@@ -135,7 +135,7 @@
         },
         _displayCart: function () {
             var cartArray = this._listCart();
-            console.log(cartArray);
+            //console.log(cartArray);
             var output = "";
             if (cartArray.length <= 0) {
                 output = "<h4>Your cart is empty</h4>";
@@ -190,7 +190,7 @@
     $.fn.simpleCart = function (options) {
         return this.each(function () {
             $.data(this, "simpleCart", new simpleCart(this));
-            console.log($(this, "simpleCart"));
+            //console.log($(this, "simpleCart"));
         });
     }
     ;
