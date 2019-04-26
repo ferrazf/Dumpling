@@ -14,7 +14,7 @@ $(() => {
           '</div><div><i class="fa fa-dot-circle-o veg-icon" /> </div><div class="item-price-container"><div class="item-price"><i class="fa fa-dollar" />' +
           item.price +
           '</div><div class="spacer" /><div class="add-button"> <button class="btn btn-primary sc-add-to-cart" data-name="' +
-          item.descr +
+          item.name +
           '" data-price="50"type="submit">ADD</button></div></div></div></div>'
       );
     }

@@ -83,6 +83,15 @@
         _setEvents: function () {
             var mi = this;
 
+            $(".panel-body .row").on("click", this.options.addtoCartClass,function (e) {
+                e.preventDefault();
+                var name = $(this).attr("data-name");
+                var cost = Number($(this).attr("data-price"));
+                console.log("check");
+                mi._addItemToCart(name, cost, 1);
+                mi._updateCartDetails();
+            });
+
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
                 console.log(mi.cart);
