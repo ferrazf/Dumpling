@@ -15,6 +15,7 @@
         cart: [],
         addtoCartClass: '.sc-add-to-cart',
         removeFromCartClass: '.sc-remove-from-cart',
+        checkoutClass: '.sc-checkout',
         cartProductListClass: '.cart-products-list',
         totalCartCountClass: '.total-cart-count',
         totalCartCostClass: '.total-cart-cost',
@@ -63,7 +64,7 @@
                                             <div class='cart-checkout'>\n\
                                             <form action='#'>\n\
                                                 <textarea></textarea>\n\
-                                                <button type='submit' class='btn btn-primary'>Proceed To Checkout</button>\n\
+                                                <button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
                                             </form>\n\
                                         </div>\n\
                                  </div>");
@@ -81,6 +82,11 @@
         },
         _setEvents: function () {
             var mi = this;
+
+            $(this.options.checkoutClass).on("click", function (e) {
+                e.preventDefault();
+                console.log(mi.cart);
+            });
 
             $(this.options.addtoCartClass).on("click", function (e) {
                 e.preventDefault();
@@ -107,7 +113,6 @@
                 var name = $(this).attr("data-name");
                 var cost = Number($(this).attr("data-price"));
                 mi._removeItemfromCart(name, cost, count);
-                console.log("check1");
                 mi._updateCartDetails();
             });
         },
@@ -127,15 +132,11 @@
         },
         _removeItemfromCart: function (name, price, count) {
             for (var i in this.cart) {
-                console.log(count);
                 if (this.cart[i].name === name) {
-
                     var singleItemCost = Number(price / this.cart[i].count);
                     this.cart[i].count = count;
                     this.cart[i].price = singleItemCost * count;
-
                     if (count == 0) {
-
                         this.cart.splice(i, 1);
                     }
                     break;
