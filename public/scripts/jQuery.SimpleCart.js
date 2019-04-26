@@ -42,7 +42,6 @@
         this.init();
     }
 
-
     /*plugin functions */
     $.extend(simpleCart.prototype, {
         init: function () {
@@ -91,34 +90,26 @@
 
             $(".panel-body .row").on("click", this.options.addtoCartClass,function (e) {
                 e.preventDefault();
-                let itemid = $(this).attr("data-id");
+                let elID = $(this).attr("data-id");
                 let name = $(this).attr("data-name");
                 let cost = Number($(this).attr("data-price"));
-                mi._addItemToCart(itemid, name, cost, 1);
+                mi._addItemToCart(elID, name, cost, 1);
                 mi._updateCartDetails();
             });
 
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
-            });
-
-            $(this.options.addtoCartClass).on("click", function (e) {
-                e.preventDefault();
-                let itemid = $(this).attr("data-id");
-                let name = $(this).attr("data-name");
-                let cost = Number($(this).attr("data-price"));
-                mi._addItemToCart(itemid, name, cost, 1);
-                mi._updateCartDetails();
+                console.log(mi.cart);
             });
 
             $(this.options.showcartID).on("change", this.options.itemCountClass, function (e) {
                 let ci = this;
                 e.preventDefault();
                 let count = $(this).val();
-                let itemid = $(this).attr("data-id");
+                let elID = $(this).attr("data-id");
                 let name = $(this).attr("data-name");
                 let cost = Number($(this).attr("data-price"));
-                mi._removeItemfromCart(itemid, name, cost, count);
+                mi._removeItemfromCart(name, cost, count);
                 mi._updateCartDetails();
             });
 
@@ -126,32 +117,33 @@
                 let ci = this;
                 e.preventDefault();
                 let count = 0;
-                let itemid = $(this).attr("data-id");
+                let elID = $(this).attr("data-id");
                 let name = $(this).attr("data-name");
+                console.log($(this));
                 let cost = Number($(this).attr("data-price"));
-                mi._removeItemfromCart(itemid, name, cost, count);
+                mi._removeItemfromCart(elID, cost, count);
                 mi._updateCartDetails();
             });
         },
         /* Helper Functions */
-        _addItemToCart: function (itemid, name, price, count) {
+        _addItemToCart: function (elID, name, price, count) {
             for (let i in this.cart) {
-                console.log(this.cart[i]);
-                if (this.cart[i].itemid == itemid) {
+                if (this.cart[i].itemid == elID) {
                     this.cart[i].count++;
                     this.cart[i].price = price * this.cart[i].count;
                     this._saveCart();
                     return;
                 }
             }
-            let item = new Item(itemid, name, price, count);
+            let item = new Item(elID, name, price, count);
             this.cart.push(item);
             this._saveCart();
         },
-        _removeItemfromCart: function (itemid, price, count) {
-            for (let i in this.cart) {
-                if (this.cart[i].itemid === itemid) {
-                    let singleItemCost = Number(price / this.cart[i].count);
+        _removeItemfromCart: function (elID, price, count) {
+            for (var i in this.cart) {
+                console.log("(this.cart[i].itemid = " + this.cart[i].itemid + ", elID = " + elID );
+                if (this.cart[i].itemid == elID) {
+                    var singleItemCost = Number(price / this.cart[i].count);
                     this.cart[i].count = count;
                     this.cart[i].price = singleItemCost * count;
                     if (count == 0) {
@@ -177,19 +169,10 @@
                 output = "<h4>Your cart is empty</h4>";
             }
             for (let i in cartArray) {
-                //console.log(cartArray[i]);
+                console.log(cartArray[i]);
                 let dataId = (cartArray[i].itemid) ? cartArray[i].itemid : 0;
-
-                output += "<div class='cart-each-product'>\n\
-                       <div class='name'>" + cartArray[i].name + "</div>\n\
-                       <div class='quantityContainer'>\n\
-                            <input type='number' class='quantity form-control item-count' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' min='0' value=" + cartArray[i].count + " name='number'>\n\
-                       </div>\n\
-                       <div class='quantity-am'><i class='fa fa-dollar'>" + cartArray[i].price + "</i></div>\n\
-                       </div>\n\
-                       <div class='add-button'>\n\
-                            <button class='btn btn-primary sc-remove-from-cart' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "type='submit'>x</button>\n\
-                       </div>";
+                //console.log(cartArray[i]);
+                output += "<div class='cart-each-product'><div class='name'>" + cartArray[i].name + "</div><div class='quantityContainer'><input type='number' class='quantity form-control item-count' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' min='0' value=" + cartArray[i].count + " name='number'></div><div class='quantity-am'><i class='fa fa-dollar'>" + cartArray[i].price + "</i></div></div><div class='add-button'><button class='btn btn-primary sc-remove-from-cart' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' type='submit'>x</button></div>";
             }
             return output;
         },
