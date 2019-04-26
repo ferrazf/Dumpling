@@ -4,7 +4,7 @@ const sendSMS = require('./send-sms');
 const http = require("http");
 const bodyParser = require('body-parser');
 const express = require("express");
-const twilio = require("twilio");
+const twilio = require("twilio"); // might not needed since the sendSMS has plug-in;
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
 const knexConfig  = require("../.././knexfile"); 
@@ -29,7 +29,7 @@ app.post('/', (req, res) => {
     let reply = req.body["Body"].split(","); // reply format will be phonenumber (without +1) + ',' + wait time
     let num = reply[0].trim();
     let eta = reply[1].trim();
-    // let inputArray = [{etaminutes: eta}];
+    
     knex('orders').update({'etaminutes': eta}).where({
         phonenumber: num
     })
