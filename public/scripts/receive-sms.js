@@ -33,7 +33,7 @@ app.post('/', (req, res) => {
     knex('orders').update({'etaminutes': eta}).where({
         phonenumber: num
     })
-    .then(sendSMS( "+1" + num, `You order will be ready in ${eta} minutes.` )) // add +1 at the beginning of the phone number
+    .then(sendSMS( "+1" + num, `You order will be ready in about ${eta} minutes.` )) // add +1 at the beginning of the phone number
     .catch((err) => {
       console.log('err ', err);
     })
@@ -51,6 +51,7 @@ app.post('/', (req, res) => {
 http.createServer(app).listen(1337, () => {
     console.log("Express server listening on port 1337");
 })
-// ngrok http 1337 on a separated terminal and get the http server address
+// ngrok http 1337 on a separated terminal and get the http server address 
+// always add /twilio/webhook
 // save that address to https://www.twilio.com/console/phone-numbers/PN20a898aa406518a1d5df602f824d8a60
 // to update the webhook, http post message incoming
