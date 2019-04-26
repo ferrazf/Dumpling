@@ -13,7 +13,7 @@ import { KeyContext } from "twilio/lib/rest/api/v2010/account/key";
 (function ($, window, document, undefined) {
 
     /* Default Options */
-    var defaults = {
+    let defaults = {
         cart: [],
         addtoCartClass: '.sc-add-to-cart',
         removeFromCartClass: '.sc-remove-from-cart',
@@ -25,7 +25,8 @@ import { KeyContext } from "twilio/lib/rest/api/v2010/account/key";
         itemCountClass : '.item-count'
     };
 
-    function Item(name, price, count) {
+    function Item(itemid, name, price, count) {
+        this.itemid = itemid;
         this.name = name;
         this.price = price;
         this.count = count;
@@ -43,14 +44,18 @@ import { KeyContext } from "twilio/lib/rest/api/v2010/account/key";
         this.init();
     }
 
-
     /*plugin functions */
     $.extend(simpleCart.prototype, {
         init: function () {
+            console.log("1");
             this._setupCart();
+            console.log("2");
             this._setEvents();
+            console.log("3");
             this._loadCart();
+            console.log("4");
             this._updateCartDetails();
+            console.log("5");
         },
         _setupCart: function () {
             this.cart_ele.addClass("cart-grid panel panel-defaults");
@@ -74,7 +79,7 @@ import { KeyContext } from "twilio/lib/rest/api/v2010/account/key";
         _addProductstoCart: function () {
         },
         _updateCartDetails: function () {
-            var mi = this;
+            let mi = this;
             $(this.options.cartProductListClass).html(mi._displayCart());
             $(this.options.totalCartCountClass).html("Your Cart " + mi._totalCartCount() + " items");
             $(this.options.totalCartCostClass).html(mi._totalCartCost());
@@ -83,14 +88,14 @@ import { KeyContext } from "twilio/lib/rest/api/v2010/account/key";
 
         },
         _setEvents: function () {
-            var mi = this;
+            let mi = this;
 
             $(".panel-body .row").on("click", this.options.addtoCartClass,function (e) {
                 e.preventDefault();
-                var name = $(this).attr("data-name");
-                var cost = Number($(this).attr("data-price"));
-                console.log("check");
-                mi._addItemToCart(name, cost, 1);
+                let elID = $(this).attr("data-id");
+                let name = $(this).attr("data-name");
+                let cost = Number($(this).attr("data-price"));
+                mi._addItemToCart(elID, name, cost, 1);
                 mi._updateCartDetails();
             });
 
@@ -133,51 +138,47 @@ import { KeyContext } from "twilio/lib/rest/api/v2010/account/key";
 
             });
 
-            $(this.options.addtoCartClass).on("click", function (e) {
-                e.preventDefault();
-                var name = $(this).attr("data-name");
-                var cost = Number($(this).attr("data-price"));
-                mi._addItemToCart(name, cost, 1);
-                mi._updateCartDetails();
-            });
-
             $(this.options.showcartID).on("change", this.options.itemCountClass, function (e) {
-                var ci = this;
+                let ci = this;
                 e.preventDefault();
-                var count = $(this).val();
-                var name = $(this).attr("data-name");
-                var cost = Number($(this).attr("data-price"));
+                let count = $(this).val();
+                let elID = $(this).attr("data-id");
+                let name = $(this).attr("data-name");
+                let cost = Number($(this).attr("data-price"));
                 mi._removeItemfromCart(name, cost, count);
                 mi._updateCartDetails();
             });
 
             $(this.options.showcartID).on("click", this.options.removeFromCartClass,function (e) {
-                var ci = this;
+                let ci = this;
                 e.preventDefault();
-                var count = 0;
-                var name = $(this).attr("data-name");
-                var cost = Number($(this).attr("data-price"));
-                mi._removeItemfromCart(name, cost, count);
+                let count = 0;
+                let elID = $(this).attr("data-id");
+                let name = $(this).attr("data-name");
+                console.log($(this));
+                let cost = Number($(this).attr("data-price"));
+                mi._removeItemfromCart(elID, cost, count);
                 mi._updateCartDetails();
             });
         },
         /* Helper Functions */
-        _addItemToCart: function (name, price, count) {
-            for (var i in this.cart) {
-                if (this.cart[i].name === name) {
+        _addItemToCart: function (elID, name, price, count) {
+            for (let i in this.cart) {
+                if (this.cart[i].itemid == elID) {
                     this.cart[i].count++;
                     this.cart[i].price = price * this.cart[i].count;
                     this._saveCart();
                     return;
                 }
             }
-            var item = new Item(name, price, count);
+            let item = new Item(elID, name, price, count);
             this.cart.push(item);
             this._saveCart();
         },
-        _removeItemfromCart: function (name, price, count) {
+        _removeItemfromCart: function (elID, price, count) {
             for (var i in this.cart) {
-                if (this.cart[i].name === name) {
+                console.log("(this.cart[i].itemid = " + this.cart[i].itemid + ", elID = " + elID );
+                if (this.cart[i].itemid == elID) {
                     var singleItemCost = Number(price / this.cart[i].count);
                     this.cart[i].count = count;
                     this.cart[i].price = singleItemCost * count;
@@ -197,39 +198,33 @@ import { KeyContext } from "twilio/lib/rest/api/v2010/account/key";
             return this.cart.length;
         },
         _displayCart: function () {
-            var cartArray = this._listCart();
+            let cartArray = this._listCart();
             //console.log(cartArray);
-            var output = "";
+            let output = "";
             if (cartArray.length <= 0) {
                 output = "<h4>Your cart is empty</h4>";
             }
-            for (var i in cartArray) {
-                output += "<div class='cart-each-product'>\n\
-                       <div class='name'>" + cartArray[i].name + "</div>\n\
-                       <div class='quantityContainer'>\n\
-                            <input type='number' class='quantity form-control item-count' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' min='0' value=" + cartArray[i].count + " name='number'>\n\
-                       </div>\n\
-                       <div class='quantity-am'><i class='fa fa-dollar'>" + cartArray[i].price + "</i></div>\n\
-                       </div>\n\
-                       <div class='add-button'>\n\
-                            <button class='btn btn-primary sc-remove-from-cart' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "type='submit'>x</button>\n\
-                       </div>";
+            for (let i in cartArray) {
+                console.log(cartArray[i]);
+                let dataId = (cartArray[i].itemid) ? cartArray[i].itemid : 0;
+                //console.log(cartArray[i]);
+                output += "<div class='cart-each-product'><div class='name'>" + cartArray[i].name + "</div><div class='quantityContainer'><input type='number' class='quantity form-control item-count' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' min='0' value=" + cartArray[i].count + " name='number'></div><div class='quantity-am'><i class='fa fa-dollar'>" + cartArray[i].price + "</i></div></div><div class='add-button'><button class='btn btn-primary sc-remove-from-cart' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' type='submit'>x</button></div>";
             }
             return output;
         },
         _totalCartCost: function () {
-            var totalCost = 0;
-            for (var i in this.cart) {
+            let totalCost = 0;
+            for (let i in this.cart) {
                 totalCost += this.cart[i].price;
             }
             return totalCost;
         },
         _listCart: function () {
-            var cartCopy = [];
-            for (var i in this.cart) {
-                var item = this.cart[i];
-                var itemCopy = {};
-                for (var p in item) {
+            let cartCopy = [];
+            for (let i in this.cart) {
+                let item = this.cart[i];
+                let itemCopy = {};
+                for (let p in item) {
                     itemCopy[p] = item[p];
                 }
                 cartCopy.push(itemCopy);
@@ -237,9 +232,9 @@ import { KeyContext } from "twilio/lib/rest/api/v2010/account/key";
             return cartCopy;
         },
         _calGST: function () {
-            var GSTPercent = 18;
-            var totalcost = this.totalCartCost();
-            var calGST = Number((totalcost * GSTPercent) / 100);
+            let GSTPercent = 18;
+            let totalcost = this.totalCartCost();
+            let calGST = Number((totalcost * GSTPercent) / 100);
             return calGST;
         },
         _saveCart: function () {

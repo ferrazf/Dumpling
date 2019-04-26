@@ -14,12 +14,10 @@ and open the template in the editor.
         <link href="../styles/simple_Cart.css" rel="stylesheet">
         <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- //SimpleCart Menu-->
+        <script src="../scripts/jQuery.SimpleCart.js" ></script>
         <script type="text/javascript" src="/scripts/app.js"></script>
-        <style>
-body {}
 
-h1 { margin: 150px auto 30px auto; }
-    </style>
     </head>
     <body>
         <% include partials/_header %>
@@ -45,7 +43,7 @@ h1 { margin: 150px auto 30px auto; }
                                                         </div>
                                                         <div class="spacer"></div>
                                                         <div class="add-button">
-                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Veg biriyani" data-price="199" type="submit">ADD</button>
+                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Veg biriyani" data-price="199" data-id=99 type="submit">ADD</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -58,7 +56,7 @@ h1 { margin: 150px auto 30px auto; }
                                                         </div>
                                                         <div class="spacer"></div>
                                                         <div class="add-button">
-                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Sweet Corn Soup" data-price="50" type="submit">ADD</button>
+                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Sweet Corn Soup" data-price="50" data-id=98 type="submit">ADD</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -71,7 +69,7 @@ h1 { margin: 150px auto 30px auto; }
                                                         </div>
                                                         <div class="spacer"></div>
                                                         <div class="add-button">
-                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Corn fried Rice" data-price="112" type="submit">ADD</button>
+                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Corn fried Rice" data-price="112" data-id=97 type="submit">ADD</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -84,14 +82,14 @@ h1 { margin: 150px auto 30px auto; }
                                                         </div>
                                                         <div class="spacer"></div>
                                                         <div class="add-button">
-                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Orange Juice" data-price="50" type="submit">ADD</button>
+                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Orange Juice" data-price="50" data-id=96 type="submit">ADD</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="menu-item-container">
-                                                    <div class="item-name">Aloo Tikis</div>
+                                                    <div class="item-name">Vegetarian Bacon</div>
                                                     <div><i class="fa fa-dot-circle-o veg-icon"></i></div>
                                                     <div class="item-price-container">
                                                         <div class="item-price">
@@ -99,7 +97,7 @@ h1 { margin: 150px auto 30px auto; }
                                                         </div>
                                                         <div class="spacer"></div>
                                                         <div class="add-button">
-                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Aloo Tikis" data-price="89" type="submit">ADD</button>
+                                                            <button class="btn btn-primary sc-add-to-cart" data-name="Aloo Tikis" data-price="89" data-id=95 type="submit">ADD</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -120,8 +118,6 @@ h1 { margin: 150px auto 30px auto; }
                 </div>
             </div>
         </div>
-        <!-- //Menu-->
-        <script src="../scripts/jQuery.SimpleCart.js" ></script>
         <script>
             $(document).ready(function () {
                 $('#cart').simpleCart();
@@ -132,9 +128,6 @@ h1 { margin: 150px auto 30px auto; }
     <script type="text/javascript">
 
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-36251023-1']);
-  _gaq.push(['_setDomainName', 'jqueryscript.net']);
-  _gaq.push(['_trackPageview']);
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
