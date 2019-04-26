@@ -128,6 +128,7 @@
         /* Helper Functions */
         _addItemToCart: function (name, price, count) {
             for (var i in this.cart) {
+                console.log(this.cart[i]);
                 if (this.cart[i].name === name) {
                     this.cart[i].count++;
                     this.cart[i].price = price * this.cart[i].count;
@@ -168,10 +169,13 @@
                 output = "<h4>Your cart is empty</h4>";
             }
             for (var i in cartArray) {
+                console.log(cartArray[i]);
+                let dataId = (cartArray[i].id) ? cartArray[i].id : 0;
+
                 output += "<div class='cart-each-product'>\n\
                        <div class='name'>" + cartArray[i].name + "</div>\n\
                        <div class='quantityContainer'>\n\
-                            <input type='number' class='quantity form-control item-count' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' min='0' value=" + cartArray[i].count + " name='number'>\n\
+                            <input type='number' class='quantity form-control item-count' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' min='0' value=" + cartArray[i].count + " name='number'>\n\
                        </div>\n\
                        <div class='quantity-am'><i class='fa fa-dollar'>" + cartArray[i].price + "</i></div>\n\
                        </div>\n\
