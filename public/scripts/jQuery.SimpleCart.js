@@ -1,3 +1,5 @@
+import { KeyContext } from "twilio/lib/rest/api/v2010/account/key";
+
 /*
  * jQuery Simple Shopping Cart v0.1
  * Basis shopping cart using javascript/Jquery.
@@ -95,34 +97,39 @@
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
                 if ($(".phonenum").val().length === 10) {
-                    let msgToClient = [];
-                    for (let index of mi.cart) {
-                    msgToClient.push(`${index["name"]}: ${index["count"]} servering(s)`);
-                    }
-                    console.log(msgToClient.join(" "));
-                    
+                    // let msgToClient = [];
+                    // for (let index of mi.cart) {
+                    //     msgToClient.push(`${index["name"]}: ${index["count"]} servering(s)`);
+                    // };
+
                     $.ajax({
-                    type: "POST",
-                    url: "/twilio/send",
-                    data: {
-                        msg: msgToClient.join(" ") || ""
-                    },
-                    dataType: "object",
+                        type: "POST",
+                        url: "/order",
+                        data:{
+                            order: mi.cart,
+                            phonenum: $(".phonenum").val()
+                        },
+                        dataType: "object",
                     })
-                    .done($(".phonenum").val(""))
-                    .done(mi._clearCart())
-                    .done(mi._updateCartDetails());
+
+                    // .done(
+                    // $.ajax({
+                    // type: "POST",
+                    // url: "/twilio/send",
+                    // data: {
+                    //     msg: msgToClient.join(" ") || ""
+                    // },
+                    // dataType: "object",
+                    // })
+                    // .done($(".phonenum").val(""))
+                    // .done(mi._clearCart())
+                    // .done(mi._updateCartDetails())
+                    // )
+                    
                 
                 } else {
                     alert("Please enter a valid phone number.");
                 };
-                
-
-                // mi.cart.forEach((order) => {
-                //     console.log(`${order["name"]}: ${order["count"]} servering(s)`);
-                // });
-
-                
 
             });
 
