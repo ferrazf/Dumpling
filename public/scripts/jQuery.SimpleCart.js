@@ -63,7 +63,7 @@
                                             </div>\n\
                                             <div class='cart-checkout'>\n\
                                             <form action='#'>\n\
-                                                <textarea></textarea>\n\
+                                                <textarea class='phonenum'></textarea>\n\
                                                 <button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
                                             </form>\n\
                                         </div>\n\
@@ -85,7 +85,36 @@
 
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
-                console.log(mi.cart);
+                if ($(".phonenum").val().length === 10) {
+                    let msgToClient = [];
+                    for (let index of mi.cart) {
+                    msgToClient.push(`${index["name"]}: ${index["count"]} servering(s)`);
+                    }
+                    console.log(msgToClient.join(" "));
+                    
+                    $.ajax({
+                    type: "POST",
+                    url: "/twilio/send",
+                    data: {
+                        msg: msgToClient.join(" ") || ""
+                    },
+                    dataType: "object",
+                    })
+                    .done($(".phonenum").val(""))
+                    .done(mi._clearCart())
+                    .done(mi._updateCartDetails());
+                
+                } else {
+                    alert("Please enter a valid phone number.");
+                };
+                
+
+                // mi.cart.forEach((order) => {
+                //     console.log(`${order["name"]}: ${order["count"]} servering(s)`);
+                // });
+
+                
+
             });
 
             $(this.options.addtoCartClass).on("click", function (e) {
@@ -153,7 +182,7 @@
         },
         _displayCart: function () {
             var cartArray = this._listCart();
-            console.log(cartArray);
+            // console.log(cartArray);
             var output = "";
             if (cartArray.length <= 0) {
                 output = "<h4>Your cart is empty</h4>";
@@ -211,7 +240,7 @@
     $.fn.simpleCart = function (options) {
         return this.each(function () {
             $.data(this, "simpleCart", new simpleCart(this));
-            console.log($(this, "simpleCart"));
+            // console.log($(this, "simpleCart"));
         });
     }
     ;
