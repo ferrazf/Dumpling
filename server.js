@@ -72,17 +72,30 @@ app.post('/twilio/send', (req, res) => {
 });
 
 app.post('/twilio/webhook', (req, res) => {
-  let reply = req.body["Body"].split(","); // reply format will be phonenumber (without +1) + ',' + wait time
-  let num = reply[0].trim();
-  let eta = reply[1].trim();
-  
-  knex('orders').update({'etaminutes': eta}).where({
-      phonenumber: num
-  })
-  .then(sendSMS( "+1" + num, `You order will be ready in about ${eta} minutes.` )) // add +1 at the beginning of the phone number
-  .catch((err) => {
+
+  if(req.body["Body"].length === 10){
+    knex('orders').update({'active': 'false'}).where({
+      phonenumber: req.body["Body"]
+    })
+    .then(sendSMS( "+1" + req.body["Body"], `You order is ready. Come pick it up!` )) // add +1 at the beginning of the phone number
+    .catch((err) => {
     console.log('err ', err);
-  })
+    })
+
+  } else {
+    let reply = req.body["Body"].split(","); // reply format will be phonenumber (without +1) + ',' + wait time
+    let num = reply[0].trim();
+    let eta = reply[1].trim();
+  
+    knex('orders').update({'etaminutes': eta}).where({
+      phonenumber: num
+    })
+    .then(sendSMS( "+1" + num, `You order will be ready in about ${eta} minutes.` )) // add +1 at the beginning of the phone number
+    .catch((err) => {
+    console.log('err ', err);
+    })
+  }
+  
 });
 
 app.listen(PORT, () => {
