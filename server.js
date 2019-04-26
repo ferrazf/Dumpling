@@ -55,9 +55,9 @@ app.get("/menu", (req, res) => {
 });
 
 // Checkout page
-app.get("/checkout/:id", (req, res) => {
+app.get("/contact", (req, res) => {
   let templateVars =  {path: req.route.path};
-  res.render("checkout", templateVars);
+  res.render("contact", templateVars);
 });
 
 // Confirmation page
@@ -98,6 +98,10 @@ app.post('/twilio/webhook', (req, res) => {
   
 });
 
+// app.get("/checkout/:id/confirm", (req, res) => {
+//   let templateVars =  {path: req.route.path};
+//   res.render("confirm", templateVars);
+// });
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
