@@ -20,7 +20,7 @@ body a{
 }
 h1,h2,h3,h4,h5,h6{
 	margin:0;
-	font-family: 'Berkshire Swash', cursive;
+	font-family: -webkit-body,'Yantramanav', sans-serif;
 }
 p{
 	margin:0;
