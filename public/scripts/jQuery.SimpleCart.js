@@ -45,15 +45,10 @@
     /*plugin functions */
     $.extend(simpleCart.prototype, {
         init: function () {
-            console.log("1");
             this._setupCart();
-            console.log("2");
             this._setEvents();
-            console.log("3");
             this._loadCart();
-            console.log("4");
             this._updateCartDetails();
-            console.log("5");
         },
         _setupCart: function () {
             this.cart_ele.addClass("cart-grid panel panel-defaults");
@@ -99,7 +94,6 @@
 
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
-                console.log(mi.cart);
             });
 
             $(this.options.showcartID).on("change", this.options.itemCountClass, function (e) {
@@ -119,7 +113,6 @@
                 let count = 0;
                 let elID = $(this).attr("data-id");
                 let name = $(this).attr("data-name");
-                console.log($(this));
                 let cost = Number($(this).attr("data-price"));
                 mi._removeItemfromCart(elID, cost, count);
                 mi._updateCartDetails();
@@ -163,7 +156,6 @@
         },
         _displayCart: function () {
             let cartArray = this._listCart();
-            //console.log(cartArray);
             let output = "";
             if (cartArray.length <= 0) {
                 output = "<h4>Your cart is empty</h4>";
@@ -171,7 +163,6 @@
             for (let i in cartArray) {
                 console.log(cartArray[i]);
                 let dataId = (cartArray[i].itemid) ? cartArray[i].itemid : 0;
-                //console.log(cartArray[i]);
                 output += "<div class='cart-each-product'><div class='name'>" + cartArray[i].name + "</div><div class='quantityContainer'><input type='number' class='quantity form-control item-count' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' min='0' value=" + cartArray[i].count + " name='number'></div><div class='quantity-am'><i class='fa fa-dollar'>" + cartArray[i].price + "</i></div></div><div class='add-button'><button class='btn btn-primary sc-remove-from-cart' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' type='submit'>x</button></div>";
             }
             return output;
@@ -215,7 +206,6 @@
     $.fn.simpleCart = function (options) {
         return this.each(function () {
             $.data(this, "simpleCart", new simpleCart(this));
-            //console.log($(this, "simpleCart"));
         });
     }
     ;
