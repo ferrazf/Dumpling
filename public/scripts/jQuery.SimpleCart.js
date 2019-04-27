@@ -46,15 +46,10 @@
     /*plugin functions */
     $.extend(simpleCart.prototype, {
         init: function () {
-            console.log("1");
             this._setupCart();
-            console.log("2");
             this._setEvents();
-            console.log("3");
             this._loadCart();
-            console.log("4");
             this._updateCartDetails();
-            console.log("5");
         },
         _setupCart: function () {
             this.cart_ele.addClass("cart-grid panel panel-defaults");
@@ -68,9 +63,12 @@
                                             <div><i class='fa fa-dollar total-cart-cost'>0</i></div>\n\
                                             </div>\n\
                                             <div class='cart-checkout'>\n\
-                                            <form action='#'>\n\
-                                                <textarea class='phonenum'></textarea>\n\
-                                                <button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
+                                            <form class='form-inline' action='#'>\n\
+                                                <label class='sr-only' for='order-phone-number'>Username</label>\n\
+                                                <div class='input-group mb-2 mr-sm-2 mb-sm-0 sc-phone-number'>\n\
+    <div class='input-group-addon'><i class='fas fa-phone'></i></div>\n\
+                <input type='text' class='form-control' id='order-phone-number' placeholder='Enter Phone Your Number'>\n\
+  </div><button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
                                             </form>\n\
                                         </div>\n\
                                  </div>");
@@ -89,7 +87,7 @@
         _setEvents: function () {
             let mi = this;
 
-            $(".panel-body .row").on("click", this.options.addtoCartClass,function (e) {
+            $(".panel-body .row").on("click", this.options.addtoCartClass, function (e) {
                 e.preventDefault();
                 let elID = $(this).attr("data-id");
                 let name = $(this).attr("data-name");
@@ -108,11 +106,11 @@
                         url: "/twilio/send",
                         data: {
                             order: mi.cart,
-                            phonenum: $(".phonenum").val()
+                            phonenum: $("#order-phone-number").val()
                         },
                         dataType: "object",
                         })
-                        .then($(".phonenum").val(""))
+                        .then($("#order-phone-number").val(""))
                         .then(mi._clearCart())
                         .then(mi._updateCartDetails());
 
@@ -141,13 +139,12 @@
                 mi._updateCartDetails();
             });
 
-            $(this.options.showcartID).on("click", this.options.removeFromCartClass,function (e) {
+            $(this.options.showcartID).on("click", this.options.removeFromCartClass, function (e) {
                 let ci = this;
                 e.preventDefault();
                 let count = 0;
                 let elID = $(this).attr("data-id");
                 let name = $(this).attr("data-name");
-                console.log($(this));
                 let cost = Number($(this).attr("data-price"));
                 mi._removeItemfromCart(elID, cost, count);
                 mi._updateCartDetails();
@@ -169,7 +166,7 @@
         },
         _removeItemfromCart: function (elID, price, count) {
             for (var i in this.cart) {
-                console.log("(this.cart[i].itemid = " + this.cart[i].itemid + ", elID = " + elID );
+                console.log("(this.cart[i].itemid = " + this.cart[i].itemid + ", elID = " + elID);
                 if (this.cart[i].itemid == elID) {
                     var singleItemCost = Number(price / this.cart[i].count);
                     this.cart[i].count = count;
@@ -191,16 +188,18 @@
         },
         _displayCart: function () {
             let cartArray = this._listCart();
-            //console.log(cartArray);
             let output = "";
             if (cartArray.length <= 0) {
                 output = "<h4>Your cart is empty</h4>";
             }
             for (let i in cartArray) {
-                console.log(cartArray[i]);
                 let dataId = (cartArray[i].itemid) ? cartArray[i].itemid : 0;
-                //console.log(cartArray[i]);
-                output += "<div class='cart-each-product'><div class='name'>" + cartArray[i].name + "</div><div class='quantityContainer'><input type='number' class='quantity form-control item-count' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' min='0' value=" + cartArray[i].count + " name='number'></div><div class='quantity-am'><i class='fa fa-dollar'>" + cartArray[i].price + "</i></div></div><div class='add-button'><button class='btn btn-primary sc-remove-from-cart' data-name='" + cartArray[i].name + "' data-price='" + cartArray[i].price + "' data-id='" + dataId + "' type='submit'>x</button></div>";
+                let itemPrice = parseFloat(cartArray[i].price).toFixed(2);
+
+                output += `<div class='cart-each-product'>
+                <div class='name'>${cartArray[i].name}</div>
+                <div class='quantityContainer'><input type='number' class='quantity form-control item-count' data-name='${cartArray[i].name}' data-price='${itemPrice}' data-id='${dataId}' min='0' value='${cartArray[i].count}' +  name='number'></div>
+                <div class='quantity-am'><i class='fa fa-dollar'></i>${itemPrice}</div><div class='remove-button'><button class='btn sc-remove-from-cart' data-name='${cartArray[i].name}' data-price='${itemPrice}' data-id='${dataId}' type='submit'>x</button></div></div>`;
             }
             return output;
         },
@@ -209,7 +208,7 @@
             for (let i in this.cart) {
                 totalCost += this.cart[i].price;
             }
-            return totalCost;
+            return parseFloat(totalCost).toFixed(2);
         },
         _listCart: function () {
             let cartCopy = [];
@@ -243,7 +242,6 @@
     $.fn.simpleCart = function (options) {
         return this.each(function () {
             $.data(this, "simpleCart", new simpleCart(this));
-            //console.log($(this, "simpleCart"));
         });
     }
     ;
