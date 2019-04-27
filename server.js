@@ -66,14 +66,31 @@ app.get("/checkout/:id/confirm", (req, res) => {
   res.render("confirm", templateVars);
 });
 
-app.post("/order", (req, res) => {
-  console.log("order, ", req.body["order"]);
-  res.send("OK");
-});
-
 // Inform owner about the coming order
 app.post('/twilio/send', (req, res) => {
-  sendSMS(process.env.OWNER_NUMBER, req.body["msg"]);
+  let orderObj = req.body["order"];
+  let orderInput = [{phonenumber: req.body["phonenum"]}];
+
+  knex("orders").insert(orderInput, 'id')
+  .then((result) => {
+      let insertData = req.body["order"].map(x => { return {item_id_FK: x.itemid, order_id_FK: result[0]}});
+      knex("orders_items").insert(insertData)
+      .then(
+        console.log("done"),
+        () => {
+          let msgToOwner = req.body["order"]
+        }
+      )
+    }
+  )
+  
+  
+  // let msgToOwner = [];
+  // for (let index of req.body["order"][0]) {
+  // msgToOwner.push(`${index["name"]}: ${index["count"]} servering(s) from req.body["phonenum"] `);
+  // }
+  // sendSMS(process.env.OWNER_NUMBER, msgToOwner.join(" "));
+
   res.send("OK");
 });
 
