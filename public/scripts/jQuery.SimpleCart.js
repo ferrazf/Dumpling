@@ -101,41 +101,21 @@
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
                 if ($(".phonenum").val().length === 10) {
-                    let msgToClient = [];
-                    for (let index of mi.cart) {
-                    msgToClient.push(`${index["name"]}: ${index["count"]} servering(s)`);
-                    }
+                    
                     
                     $.ajax({
                         type: "POST",
-                        url: "/order",
+                        url: "/twilio/send",
                         data: {
                             order: mi.cart,
                             phonenum: $(".phonenum").val()
                         },
                         dataType: "object",
                         })
-                        .then(
-                            console.log("what are you doing")
+                        .then($(".phonenum").val(""))
+                        .then(mi._clearCart())
+                        .then(mi._updateCartDetails());
 
-                    // $.ajax({
-                    // type: "POST",
-                    // url: "/twilio/send",
-                    // data: {
-                    //     msg: msgToClient.join(" ") || ""
-                    // },
-                    // dataType: "object",
-                    // })
-                    // .then($(".phonenum").val(""))
-                    // .then(mi._clearCart())
-                    // .then(mi._updateCartDetails())
-
-                            
-                        ).then();
-                     
-                    
-                    
-                
                 } else {
                     alert("Please enter a valid phone number.");
                 };
