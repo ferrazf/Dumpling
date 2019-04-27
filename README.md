@@ -1,29 +1,43 @@
-# Node Skeleton
+# SOSFood
 
-## Project Setup
+## About the Project
+SOSFood is a full stack web application built with Node, Express, AJAX, Twilio API, jQuery, HTML5, CSS3 and PosgreSQL.
 
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
+### Problem Statement
+
+An application built to simplify online food ordering for pickup.
+
+### Expected Usage
+
+Desired users are restaurant owners and customers:
+- Restaurant owners will recieve a when an order is placed.
+  - The customer will then recieve a SMS with estimated preparation time.
+
+- Customers can order from the restaurant menu online.
+  - They are notified when the order has been accepted and how long it will take.
+
 
 ## Getting Started
+Install all dependencies using the `npm install` command.
 
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
-2. Update the .env file with your correct local information
-3. Install dependencies: `npm i`
-4. Fix to binaries for sass: `npm rebuild node-sass`
-5. Run migrations: `npm run knex migrate:latest`
-  - Check the migrations folder to see what gets created in the DB
-6. Run the seed: `npm run knex seed:run`
-  - Check the seeds file to see what gets seeded in the DB
-7. Run the server: `npm run local`
-8. Visit `http://localhost:8080/`
+Setup the database:
+  - Run `knex migrate:latest` in your terminal.
+  - Optional: Set up dummy-data by running `knex seed:run` in your terminal.
 
-## Dependencies
+Run the development web server using the 'npm start' command.
 
-- Node 5.10.x or above
-- NPM 3.8.x or above
+
+### Dependencies
+- dovenv 4.0.0 or above
+- express 4.15.3 or above
+- morgan 1.8.2 or above
+- node 5.10.x or above
+- pg 7.0.2 or above
+- twilio 3.5.0 or above
+
+## Screenshots 
+
+
+
+
+
