@@ -66,30 +66,34 @@ app.get("/checkout/:id/confirm", (req, res) => {
   res.render("confirm", templateVars);
 });
 
-// Inform owner about the coming order
+// Inform owner and client about the coming order
 app.post('/twilio/send', (req, res) => {
-  let orderObj = req.body["order"];
-  let orderInput = [{phonenumber: req.body["phonenum"]}];
+
+  let orderInput = [{phonenumber: req.body["phonenum"], active: true}];
 
   knex("orders").insert(orderInput, 'id')
   .then((result) => {
       let insertData = req.body["order"].map(x => { return {item_id_FK: x.itemid, order_id_FK: result[0]}});
-      knex("orders_items").insert(insertData)
-      .then(
-        console.log("done"),
-        () => {
-          let msgToOwner = req.body["order"]
+      knex("orders_items").insert(insertData, 'order_id_FK')
+      .then((orderResult) => {
+          let msgToOwner = formatText(req.body["order"], orderResult[0], req.body["phonenum"]);
+          sendSMS(process.env.OWNER_NUMBER, msgToOwner);
+          sendSMS("+1" + req.body["phonenum"], "Your order has been placed. We will notify you with updates. Thank you.")
         }
       )
     }
   )
   
-  
-  // let msgToOwner = [];
-  // for (let index of req.body["order"][0]) {
-  // msgToOwner.push(`${index["name"]}: ${index["count"]} servering(s) from req.body["phonenum"] `);
-  // }
-  // sendSMS(process.env.OWNER_NUMBER, msgToOwner.join(" "));
+  function formatText(orders, orderId, num)
+  {
+     let text = `Hello! You have an order (OrderId: ${orderId}) from ${num}. `;
+     for(let order of orders)
+     {
+        text += `item: ${order.name} Amount: ${order.count} \n`;
+     }
+     text += ` Please reply with "OrderId , estimated preparation time" to notify the client. When the order is ready, please only reply the OrderId.`
+     return text;
+  }
 
   res.send("OK");
 });
@@ -97,24 +101,28 @@ app.post('/twilio/send', (req, res) => {
 // Receive msg from owner and send out notification to client
 app.post('/twilio/webhook', (req, res) => {
 
-  if(req.body["Body"].length === 10){
-    knex('orders').update({'active': 'false'}).where({
-      phonenumber: req.body["Body"]
+  if(!req.body["Body"].includes(",")){
+    knex('orders').update({'active': 'false'}, 'phonenum').where({
+      id: req.body["Body"]
     })
-    .then(sendSMS( "+1" + req.body["Body"], `You order is ready. Come pick it up!` )) // add +1 at the beginning of the phone number
+    .then( (clientNum) => {
+      sendSMS( "+1" + clientNum[0], `You order is ready. Come pick it up!` )
+    }) // add +1 at the beginning of the phone number
     .catch((err) => {
     console.log('err ', err);
     })
 
   } else {
     let reply = req.body["Body"].split(","); // reply format will be phonenumber (without +1) + ',' + wait time
-    let num = reply[0].trim();
+    let replyId = reply[0].trim();
     let eta = reply[1].trim();
   
-    knex('orders').update({'etaminutes': eta}).where({
-      phonenumber: num
+    knex('orders').update({'etaminutes': eta}, 'phonenum').where({
+      id: replyId
     })
-    .then(sendSMS( "+1" + num, `You order will be ready in about ${eta} minutes.` )) // add +1 at the beginning of the phone number
+    .then( (clientNum) => {
+      sendSMS( "+1" + clientNum[0], `You order will be ready in about ${eta} minutes.` )
+    }) // add +1 at the beginning of the phone number
     .catch((err) => {
     console.log('err ', err);
     })
