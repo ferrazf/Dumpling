@@ -62,9 +62,12 @@
                                             <div><i class='fa fa-dollar total-cart-cost'>0</i></div>\n\
                                             </div>\n\
                                             <div class='cart-checkout'>\n\
-                                            <form action='#'>\n\
-                                                <textarea></textarea>\n\
-                                                <button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
+                                            <form class='form-inline' action='#'>\n\
+                                                <label class='sr-only' for='order-phone-number'>Username</label>\n\
+                                                <div class='input-group mb-2 mr-sm-2 mb-sm-0 sc-phone-number'>\n\
+    <div class='input-group-addon'><i class='fas fa-phone'></i></div>\n\
+                <input type='text' class='form-control' id='order-phone-number' placeholder='Enter Phone Your Number'>\n\
+  </div><button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
                                             </form>\n\
                                         </div>\n\
                                  </div>");
