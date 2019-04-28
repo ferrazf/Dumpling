@@ -2,14 +2,14 @@ exports.seed = function(knex, Promise) {
   return knex('items').del()
     .then(function () {
       return Promise.all([
-        knex('items').insert({ name: 'Pineapple Pizza', price: '10.00', descr: 'Large Hawaiian pineapple pizza.'}),
-        knex('items').insert({ name: 'Tomato Slice', price: '2.50', descr: 'A surprise leftover that resembles tomato.' }),
-        knex('items').insert({ name: 'Large Caesar Salad', price: '2.50', descr: 'This is my favourite dish.' }),
-        knex('items').insert({ name: 'Corn Fried Rice', price: '2.50', descr: 'Deliciously seasoned rice soaked in a thick layer of grease.' }),
-        knex('items').insert({ name: 'Vegetarian Bacon', price: '2.50', descr: 'A slice of proudly Canadian green eco-friendly bacon.' }),
-        knex('items').insert({ name: 'Sweet Corn Soup', price: '2.50', descr: 'Wait, no. <b>This</b> is my favourite dish.' }),
-        knex('items').insert({ name: 'Burrito Taco a la Tortilla', price: '2.50', descr: 'A delicious tomato slice.' }),
-        knex('items').insert({ name: 'Apple Pie', price: '5.25', descr: 'Fresh out of the oven 2 weeks ago. Minimal bacterial growth.'})
+        knex('items').insert({ name: 'Poutine on the Ritz Burger', price: '5.95', descr: 'comes with poutine fries.'}),
+        knex('items').insert({ name: 'Rest in Peas Burger', price: '5.95', descr: 'comes with peas' }),
+        knex('items').insert({ name: 'The Silentil Night Burger ' , price: '5.95', descr: 'comes with lentils.' }),
+        knex('items').insert({ name: 'Olive and Let Die Burger', price: '5.95', descr: 'comes with olives.' }),
+        knex('items').insert({ name: 'Gourdon-Hamsey Burger', price: '5.95', descr: 'comes with squash & ham.' }),
+        knex('items').insert({ name: 'Eggers Can"t Be Cheesers', price: '5.95', descr: 'comes with fried egg & cheese' }),
+        knex('items').insert({ name: 'Coke', price: '2.50', descr: '355 ml' }),
+        knex('items').insert({ name: 'Beer', price: '3.50', descr: '500 ml'})
       ]);
     });
 };
