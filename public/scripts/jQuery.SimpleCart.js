@@ -11,7 +11,7 @@
 (function ($, window, document, undefined) {
 
     /* Default Options */
-    let defaults = {
+    var defaults = {
         cart: [],
         addtoCartClass: '.sc-add-to-cart',
         removeFromCartClass: '.sc-remove-from-cart',
@@ -41,6 +41,7 @@
         //Initial init function
         this.init();
     }
+
 
     /*plugin functions */
     $.extend(simpleCart.prototype, {
@@ -75,7 +76,7 @@
         _addProductstoCart: function () {
         },
         _updateCartDetails: function () {
-            let mi = this;
+            var mi = this;
             $(this.options.cartProductListClass).html(mi._displayCart());
             $(this.options.totalCartCountClass).html("Your Cart: " + mi._totalCartCount() + " items");
             $(this.options.totalCartCostClass).html(mi._totalCartCost());
@@ -97,8 +98,39 @@
 
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
+<<<<<<< HEAD
                 console.log(mi.cart);
+=======
+                if ($("#order-phone-number").val().length === 10) {
+                    
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "/twilio/send",
+                        data: {
+                            order: mi.cart,
+                            phonenum: $("#order-phone-number").val()
+                        },
+                        dataType: "object",
+                        })
+                        .then($("#order-phone-number").val(""))
+                        .then(mi._clearCart())
+                        .then(mi._updateCartDetails());
+
+                } else {
+                    alert("Please enter a valid phone number.");
+                };
+         
+>>>>>>> 598803151ef62f0c37f7335e19c6f81e1f2887e2
             });
+
+            // $(this.options.addtoCartClass).on("click", function (e) {
+            //     e.preventDefault();
+            //     var name = $(this).attr("data-name");
+            //     var cost = Number($(this).attr("data-price"));
+            //     mi._addItemToCart(name, cost, 1);
+            //     mi._updateCartDetails();
+            // });
 
             $(this.options.showcartID).on("change", this.options.itemCountClass, function (e) {
                 let ci = this;
@@ -107,7 +139,7 @@
                 let elID = $(this).attr("data-id");
                 let name = $(this).attr("data-name");
                 let cost = Number($(this).attr("data-price"));
-                mi._removeItemfromCart(name, cost, count);
+                mi._removeItemfromCart(elID, cost, count);
                 mi._updateCartDetails();
             });
 
@@ -219,6 +251,3 @@
     }
     ;
 })(jQuery, window, document);
-
-
-
