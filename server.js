@@ -102,7 +102,7 @@ app.post('/twilio/send', (req, res) => {
 app.post('/twilio/webhook', (req, res) => {
 
   if(!req.body["Body"].includes(",")){
-    knex('orders').update({'active': 'false'}, 'phonenum').where({
+    knex('orders').update({'active': 'false'}, 'phonenumber').where({
       id: req.body["Body"]
     })
     .then( (clientNum) => {
@@ -117,7 +117,7 @@ app.post('/twilio/webhook', (req, res) => {
     let replyId = reply[0].trim();
     let eta = reply[1].trim();
 
-    knex('orders').update({'etaminutes': eta}, 'phonenum').where({
+    knex('orders').update({'etaminutes': eta}, 'phonenumber').where({
       id: replyId
     })
     .then( (clientNum) => {
