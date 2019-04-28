@@ -65,9 +65,9 @@
                                             <form class='form-inline' action='#'>\n\
                                                 <label class='sr-only' for='order-phone-number'>Username</label>\n\
                                                 <div class='input-group mb-2 mr-sm-2 mb-sm-0 sc-phone-number'>\n\
-    <div class='input-group-addon'><i class='fas fa-phone'></i></div>\n\
-                <input type='text' class='form-control' id='order-phone-number' placeholder='Enter Phone Your Number'>\n\
-  </div><button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
+                                                <div class='input-group-addon'><i class='fas fa-phone'></i></div>\n\
+                                                <textarea class='form-control' id='order-phone-number' placeholder='Enter Phone Your Number'></textarea>\n\
+                                                </div><button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
                                             </form>\n\
                                         </div>\n\
                                  </div>");
@@ -97,6 +97,7 @@
 
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
+                console.log(mi.cart);
             });
 
             $(this.options.showcartID).on("change", this.options.itemCountClass, function (e) {
@@ -164,6 +165,7 @@
                 output = "<h4>Your cart is empty</h4>";
             }
             for (let i in cartArray) {
+                console.log();
                 let dataId = (cartArray[i].itemid) ? cartArray[i].itemid : 0;
                 let itemPrice = parseFloat(cartArray[i].price).toFixed(2);
 

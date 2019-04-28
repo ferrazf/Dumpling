@@ -115,15 +115,16 @@ body{
     background-color: #227494;
 }
 .input-group-addon{
-    background-color: #d3d3d3;
+    background-color: #333333;
     line-height: 3rem;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     padding: 0 6px;
+    color: #ececec;
 }
 #order-phone-number{
     text-align: center;
-    border: 1px solid #d3d3d3;
+    border: 1px solid #969191;
     min-height: 3rem;
 }
 .sc-phone-number{
