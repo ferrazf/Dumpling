@@ -21,8 +21,8 @@ body{
     margin: 1.9rem auto 0.6rem;
     border-bottom: 2px solid #19333d;
     color: #292929;
-    /* border-top: 2px solid #19333d; */
-    line-height: 3rem;
+    line-height: 2.5rem;
+    font-weight: 500;
 }
 
 /*Font-Awesome*/
@@ -84,7 +84,7 @@ body{
     align-items: center;
 }
 .quantity{
-    width: 5rem;
+    width: 3rem;
     height: 2rem;
     margin: 0 .5rem;
     text-align: center;
@@ -94,12 +94,12 @@ body{
 .quantity-am {
     display: flex;
     align-items: center;
-    padding: 1rem 0;
-    width: 16em;
-    font-size: 0.85rem;
+    min-width: 4em;
+    font-size: 0.95rem;
+    text-align: right;
 }
 .name{
-    width: 100%;
+    min-width: 3rem;
     display: flex;
     align-items: center;
     margin-left: 0.2rem;
@@ -118,11 +118,12 @@ body{
 .sc-remove-from-cart{
     height: 20px;
     padding: 6px;
-    line-height: 0.7rem;
-    margin: 1rem 0 0 0;
+    line-height: 0.6rem;
+    margin: 0.8rem 0 0 0;
     background-color: #333;
     font-size: 0.8rem;
     color: #fff;
+    font-weight: 300;
     border-radius: 50%;
 }
 .sc-remove-from-cart:hover{
@@ -252,4 +253,19 @@ div {
 }
 .plus:hover{
     background-color: #717fe0 !important;
+}
+@media (min-width: 992px) {
+.container {
+    max-width: 68rem;
+}
+}
+@media (min-width: 768px) {
+.container {
+    max-width: 73rem;
+}
+}
+@media (max-width: 1180px) {
+.page-heading {
+    margin: 1.9rem 1em 0.6rem;
+}
 }
