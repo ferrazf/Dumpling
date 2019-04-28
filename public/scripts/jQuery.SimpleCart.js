@@ -190,7 +190,7 @@
             let cartArray = this._listCart();
             let output = "";
             if (cartArray.length <= 0) {
-                output = "<h4>Your cart is empty</h4>";
+                output = "<span class='cart-empty-msg'>Your cart is empty</span>";
             }
             for (let i in cartArray) {
                 console.log();

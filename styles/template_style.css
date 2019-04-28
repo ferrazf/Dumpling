@@ -51,7 +51,7 @@ body a:focus {
     float: left;
 }
 .w3ls-header-right {
-    text-align: center;
+    text-align: left;
 }
 w3ls-header-right ul{
 	margin: 0 auto;
@@ -255,6 +255,7 @@ li.dropdown.open .dropdown-menu,li.w3pages.open .dropdown-menu{
 }
 div .instruction-step{
 	display: block;
+	text-transform: capitalize;
 }
 div .instruction-box{
     text-align: center;

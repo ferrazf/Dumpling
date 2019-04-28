@@ -83,7 +83,7 @@ app.post('/twilio/send', (req, res) => {
       )
     }
   )
-  
+
   function formatText(orders, orderId, num)
   {
      let text = `Hello! You have an order (OrderId: ${orderId}) from ${num}. `;
@@ -116,7 +116,7 @@ app.post('/twilio/webhook', (req, res) => {
     let reply = req.body["Body"].split(","); // reply format will be phonenumber (without +1) + ',' + wait time
     let replyId = reply[0].trim();
     let eta = reply[1].trim();
-  
+
     knex('orders').update({'etaminutes': eta}, 'phonenum').where({
       id: replyId
     })
@@ -127,7 +127,7 @@ app.post('/twilio/webhook', (req, res) => {
     console.log('err ', err);
     })
   }
-  
+
 });
 
 // app.get("/checkout/:id/confirm", (req, res) => {

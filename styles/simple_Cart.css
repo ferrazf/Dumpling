@@ -44,12 +44,12 @@ body{
 }
 .cart-heading{
     display: flex;
-    background: #ec4c4c !important;
+    background: #333333 !important;
     color: #fff !important;
     padding: 0.4rem;
     font-weight: 400;
-    border-top: 2px solid #eac7c7;
-    border-bottom: 2px solid #eac7c7;
+    border-top: 2px solid #bbbbbb;
+    border-bottom: 2px solid #bbbbbb;
     line-height: 1rem;
     font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -89,12 +89,14 @@ body{
     margin: 0 .5rem;
     text-align: center;
     padding: 0;
-    font-weight: bold;
+    font-weight: 500;
 }
 .quantity-am {
     display: flex;
     align-items: center;
-    padding: 1rem;
+    padding: 1rem 0;
+    width: 16em;
+    font-size: 0.85rem;
 }
 .name{
     width: 100%;
@@ -115,15 +117,16 @@ body{
 }
 .sc-remove-from-cart{
     height: 20px;
-    border-radius: 2px;
     padding: 6px;
     line-height: 0.7rem;
-    margin: 100% 0 0 0;
+    margin: 1rem 0 0 0;
     background-color: #333;
+    font-size: 0.8rem;
     color: #fff;
+    border-radius: 50%;
 }
 .sc-remove-from-cart:hover{
-    background-color: #227494;
+    background-color: #585858;
 }
 .input-group-addon{
     background-color: #333333;
@@ -132,6 +135,7 @@ body{
     border-bottom-left-radius: 3px;
     padding: 0 6px;
     color: #ececec;
+    cursor: default;
 }
 #order-phone-number{
     text-align: center;
@@ -173,7 +177,9 @@ body{
 }
 .item-descr-container{
     font-style: italic;
-    font-size: 0.84rem;
+    font-size: 1rem;
+    margin: 0 0 19px 0;
+    text-align: left;
 }
 .item-price-container {
     margin-top: .5rem;
@@ -182,6 +188,12 @@ body{
 }
 .item-price{
     font-size: 1.2rem;
+}
+.cart-empty-msg{
+    font-family: Yantramanav, serif;
+    font-weight: 300;
+    line-height: 3em;
+    font-size: 1.4em;
 }
 .nonveg{
     position: absolute;
@@ -196,4 +208,48 @@ body{
     right: 1rem;
     z-index: 9;
     color: #2baf2b;
+}
+/* Shopping Cart quantity counter */
+.qty .count {
+    color: #000;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 30px;
+    padding: 0 2px
+    ;min-width: 35px;
+    text-align: center;
+}
+.qty .plus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 50%;
+    }
+.qty .minus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 50%;
+    background-clip: padding-box;
+}
+div {
+    text-align: center;
+}
+.minus:hover{
+    background-color: #717fe0 !important;
+}
+.plus:hover{
+    background-color: #717fe0 !important;
 }
