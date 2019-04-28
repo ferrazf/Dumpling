@@ -72,6 +72,11 @@
                                             </form>\n\
                                         </div>\n\
                                  </div>");
+
+            new Cleave('#order-phone-number', {
+                phone: true,
+                phoneRegionCode: 'CA'
+            });
         },
         _addProductstoCart: function () {
         },
@@ -98,15 +103,14 @@
 
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
-                if ($("#order-phone-number").val().length === 10) {
-
-
+                let phoneNumberEntered = $("#order-phone-number").val().split(' ').join('');
+                if (phoneNumberEntered.length === 10 || phoneNumberEntered.length === 11) {
                     $.ajax({
                         type: "POST",
                         url: "/twilio/send",
                         data: {
                             order: mi.cart,
-                            phonenum: $("#order-phone-number").val()
+                            phonenum: phoneNumberEntered
                         },
                         dataType: "object",
                         })

@@ -18,8 +18,7 @@ $(() => {
 });
 
 
-$(document).ready(function() {
-  // console.log("a");
+$(document).ready(function () {
 });
 
 // REMINDER
