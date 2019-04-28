@@ -59,7 +59,7 @@
                                         <div class='cart-total-amount'>\n\
                                             <div>Total</div>\n\
                                             <div class='spacer'></div>\n\
-                                            <div><i class='fa fa-dollar total-cart-cost'>0</i></div>\n\
+                                            <div><i class='fa fa-dollar total-cart-cost'> 0</i></div>\n\
                                             </div>\n\
                                             <div class='cart-checkout'>\n\
                                             <form class='form-inline' action='#'>\n\
@@ -172,7 +172,7 @@
                 output += `<div class='cart-each-product'>
                 <div class='name'>${cartArray[i].name}</div>
                 <div class='quantityContainer'><input type='number' class='quantity form-control item-count' data-name='${cartArray[i].name}' data-price='${itemPrice}' data-id='${dataId}' min='0' value='${cartArray[i].count}' +  name='number'></div>
-                <div class='quantity-am'><i class='fa fa-dollar'></i>${itemPrice}</div><div class='remove-button'><button class='btn sc-remove-from-cart' data-name='${cartArray[i].name}' data-price='${itemPrice}' data-id='${dataId}' type='submit'>x</button></div></div>`;
+                <div class='quantity-am'><i class='fa fa-dollar'></i> ${itemPrice}</div><div class='remove-button'><button class='btn sc-remove-from-cart' data-name='${cartArray[i].name}' data-price='${itemPrice}' data-id='${dataId}' type='submit'>x</button></div></div>`;
             }
             return output;
         },
