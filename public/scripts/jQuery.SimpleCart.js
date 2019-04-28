@@ -98,12 +98,9 @@
 
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
-<<<<<<< HEAD
-                console.log(mi.cart);
-=======
                 if ($("#order-phone-number").val().length === 10) {
-                    
-                    
+
+
                     $.ajax({
                         type: "POST",
                         url: "/twilio/send",
@@ -120,8 +117,7 @@
                 } else {
                     alert("Please enter a valid phone number.");
                 };
-         
->>>>>>> 598803151ef62f0c37f7335e19c6f81e1f2887e2
+
             });
 
             // $(this.options.addtoCartClass).on("click", function (e) {
