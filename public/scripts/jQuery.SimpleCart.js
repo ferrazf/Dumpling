@@ -98,7 +98,7 @@
 
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
-                if ($(".phonenum").val().length === 10) {
+                if ($("#order-phone-number").val().length === 10) {
                     
                     
                     $.ajax({
