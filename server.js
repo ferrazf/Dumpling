@@ -78,7 +78,7 @@ app.post('/twilio/send', (req, res) => {
       .then((orderResult) => {
           let msgToOwner = formatText(req.body["order"], orderResult[0], req.body["phonenum"]);
           sendSMS(process.env.OWNER_NUMBER, msgToOwner);
-          sendSMS("+1" + req.body["phonenum"], "Your order has been placed. We will notify you with updates. Thank you.")
+          sendSMS("+1" + req.body["phonenum"], "Your order has been placed. We will update you with the ETA. Thank you for choosing SOSFood.")
         }
       )
     }
