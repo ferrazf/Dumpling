@@ -73,7 +73,7 @@ app.post('/twilio/send', (req, res) => {
 
   knex("orders").insert(orderInput, 'id')
   .then((result) => {
-      let insertData = req.body["order"].map(x => { return {item_id_FK: x.itemid, order_id_FK: result[0]}});
+      let insertData = req.body["order"].map(x => { return {item_id_FK: x.itemid, order_id_FK: result[0], quantity: x.count}});
       knex("orders_items").insert(insertData, 'order_id_FK')
       .then((orderResult) => {
           let msgToOwner = formatText(req.body["order"], orderResult[0], req.body["phonenum"]);
