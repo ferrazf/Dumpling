@@ -37,23 +37,18 @@ body {
 /*Cart*/
 .cart-grid {
   height: calc(100vh - 190px);
-    <% include partials/_header %>
 }
 
 .cart-heading {
   display: flex;
-  background: #333333 !importa
-    <% include partials/_header %>
+  background: #333333 !important;
   color: #fff !important;
   padding: 0.4rem;
   font-weight: 400;
-  border-top: 2px solid #bbbbb
-    <% include partials/_header %>
-  border-bottom: 2px solid #bb
-    <% include partials/_header %>
+  border-top: 2px solid #bbbbbb;
+  border-bottom: 2px solid #bbb;
   line-height: 1rem;
-  font-family: "Roboto", -appl
-    <% include partials/_header %>, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 .cart-body {
