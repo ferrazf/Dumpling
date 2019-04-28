@@ -67,7 +67,7 @@
                                                 <label class='sr-only' for='order-phone-number'>Username</label>\n\
                                                 <div class='input-group mb-2 mr-sm-2 mb-sm-0 sc-phone-number'>\n\
                                                 <div class='input-group-addon'><i class='fas fa-phone'></i></div>\n\
-                                                <textarea class='form-control' id='order-phone-number' placeholder='Enter Phone Your Number'></textarea>\n\
+                                                <input class='form-control' id='order-phone-number' placeholder='Enter Phone Your Number'></input>\n\
                                                 </div><button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
                                             </form>\n\
                                         </div>\n\
