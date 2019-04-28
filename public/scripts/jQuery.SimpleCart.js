@@ -53,7 +53,7 @@
         },
         _setupCart: function () {
             this.cart_ele.addClass("cart-grid panel panel-defaults");
-            this.cart_ele.append("<div class='panel-heading cart-heading'><div class='total-cart-count'>Your Cart 0 items</div><div class='spacer'></div><i class='fa fa-dollar total-cart-cost'>0</i><div></div></div>")
+            this.cart_ele.append("<div class='panel-heading cart-heading'><div class='total-cart-count'>Your Cart: 0 items</div><div class='spacer'></div><i class='fa fa-dollar total-cart-cost'>0</i><div></div></div>")
             this.cart_ele.append("<div class='panel-body cart-body'><div class='cart-products-list' id='show-cart'><!-- Dynamic Code from Script comes here--></div></div>")
             this.cart_ele.append("<div class='cart-summary-container'>\n\
                                 <div class='cart-offer'></div>\n\
@@ -78,7 +78,7 @@
         _updateCartDetails: function () {
             var mi = this;
             $(this.options.cartProductListClass).html(mi._displayCart());
-            $(this.options.totalCartCountClass).html("Your Cart " + mi._totalCartCount() + " items");
+            $(this.options.totalCartCountClass).html("Your Cart: " + mi._totalCartCount() + " items");
             $(this.options.totalCartCostClass).html(mi._totalCartCost());
         },
         _setCartbuttons: function () {
