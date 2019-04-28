@@ -283,6 +283,12 @@ img.w3order-img {
     left: 8%;
     top: 12%;
 }
+/* Contact Page */
+.google-maps-iframe {
+    min-width: 75%;
+    min-height: 45rem;
+    margin: 3rem auto 2rem;
+}
 /*-- footer --*/
 .footer {
     background: #3c3a3a;
@@ -348,12 +354,12 @@ img.w3order-img {
     color: #3b5998;
     background: transparent;
 }
-@media (max-width:640px){
-	h1, .h1, h2, .h2, h3, .h3 {
-		margin-top: 0px;
-		margin-bottom: 0px;
-	}
+@media(min-width:1600px){
+.google-maps-iframe {
+    min-width: 70%;
 }
+}
+
 @media(max-width:1080px){
 .w3l_logo h1 {
     font-size: 3.6em;
@@ -365,9 +371,13 @@ img.w3order-img {
     top: 183%;
 }
 }
+
 @media(max-width:1024px){
 .w3l_logo h1 {
     font-size: 3.4em;
+}
+.google-maps-iframe {
+    min-width: 75%;
 }
 }
 
@@ -381,6 +391,13 @@ img.w3order-img {
 }
 .footer-grids h3, .footer h3 {
     font-size: 1.3em;
+}
+}
+
+@media (max-width:640px){
+	h1, .h1, h2, .h2, h3, .h3 {
+		margin-top: 0px;
+		margin-bottom: 0px;
 }
 }
 
