@@ -73,28 +73,23 @@ app.post("/twilio/send", (req, res) => {
 
   knex("orders").insert(orderInput, "id")
   .then((result) => {
-      let insertData = req.body["order"].map(x => { return {item_id_FK: x.itemid, order_id_FK: result[0], quantity: x.count}});
-      knex("orders_items").insert(insertData, "order_id_FK")
-      .then((orderResult) => {
-          let msgToOwner = formatText(req.body["order"], orderResult[0], req.body["phonenum"]);
-          sendSMS(process.env.OWNER_NUMBER, msgToOwner);
-          sendSMS("+1" + req.body["phonenum"], "Thank you for choosing SOSFood. Your order has been placed. We will update you with the ETA.")
-        }
-      )
-    }
-  )
+    let insertData = req.body["order"].map(x => { return {item_id_FK: x.itemid, order_id_FK: result[0], quantity: x.count}});
+    knex("orders_items").insert(insertData, "order_id_FK")
+    .then((orderResult) => {
+      let msgToOwner = formatText(req.body["order"], orderResult[0], req.body["phonenum"]);
+      sendSMS(process.env.OWNER_NUMBER, msgToOwner);
+      sendSMS("+1" + req.body["phonenum"], "Thank you for choosing SOSFood. Your order has been placed. We will update you with the ETA.");
+    });
+  });
   // helper function to format text msg
-  function formatText(orders, orderId, num)
-  {
+  function formatText(orders, orderId, num) {
      let text = `Hello! You have an order (OrderId: ${orderId}) from ${num}. `;
-     for(let order of orders)
-     {
-        text += `item: ${order.name} Amount: ${order.count} \n`;
-     }
-     text += ` Please reply with "OrderId , estimated preparation time" to notify the client. When the order is ready, please only reply the OrderId.`
-     return text;
+     for(let order of orders) {
+      text += `item: ${order.name} Amount: ${order.count} \n`;
+    }
+    text += ` Please reply with "OrderId , estimated preparation time" to notify the client. When the order is ready, please only reply the OrderId.`
+    return text;
   }
-
   res.send("OK");
 });
 
@@ -110,7 +105,7 @@ app.post("/twilio/webhook", (req, res) => {
     }) 
     .catch((err) => {
     console.log("err ", err);
-    })
+    });
 
   } else {
     let reply = req.body["Body"].split(",");
@@ -125,7 +120,7 @@ app.post("/twilio/webhook", (req, res) => {
     }) 
     .catch((err) => {
     console.log("err ", err);
-    })
+    });
   }
 
 });
