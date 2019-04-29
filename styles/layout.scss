@@ -1,10 +1,37 @@
 body {
   background-color: #EEE;
   font-family: 'Muli', sans-serif;
+}
 
-  h1 {
-    color: #244751;
-  }
+body h1 {
+  color: #244751;
+}
+
+.burger {
+  height: 46rem;
+  background: url("/images/burger.jpg");
+}
+
+.order-now-index {
+  background-color: rgba(5,135,226,0.48);
+  margin-top: 9rem;
+  color: #fff;
+  border: 6px dotted #032a48;
+  padding: 3rem 7rem;
+  font-size: 2rem;
+  text-transform: capitalize;
+  font-family: 'Lobster', cursive;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.order-now-index a {
+  color: #fff;
+}
+
+.order-now-index:hover {
+  cursor: pointer;
+  background-color: rgba(5,135,226,0.60);
 }
 
 .burger {
