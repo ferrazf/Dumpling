@@ -68,65 +68,78 @@ app.get("/checkout/:id/confirm", (req, res) => {
 
 // Inform owner and client about the coming order
 app.post("/twilio/send", (req, res) => {
+  let orderInput = [{ phonenumber: req.body["phonenum"], active: true }];
 
-  let orderInput = [{phonenumber: req.body["phonenum"], active: true}];
-
-  knex("orders").insert(orderInput, "id")
-  .then((result) => {
-      let insertData = req.body["order"].map(x => { return {item_id_FK: x.itemid, order_id_FK: result[0], quantity: x.count}});
-      knex("orders_items").insert(insertData, "order_id_FK")
-      .then((orderResult) => {
-          let msgToOwner = formatText(req.body["order"], orderResult[0], req.body["phonenum"]);
+  knex("orders")
+    .insert(orderInput, "id")
+    .then(result => {
+      let insertData = req.body["order"].map(x => {
+        return {
+          item_id_FK: x.itemid,
+          order_id_FK: result[0],
+          quantity: x.count
+        };
+      });
+      knex("orders_items")
+        .insert(insertData, "order_id_FK")
+        .then(orderResult => {
+          let msgToOwner = formatText(
+            req.body["order"],
+            orderResult[0],
+            req.body["phonenum"]
+          );
           sendSMS(process.env.OWNER_NUMBER, msgToOwner);
-          sendSMS("+1" + req.body["phonenum"], "Thank you for choosing SOSFood! Your order has been placed. We will send you an SMS with your order's ETA shortly.")
-        }
-      )
+          sendSMS(
+            "+1" + req.body["phonenum"],
+            "Thank you for choosing SOSFood! Your order has been placed. We will send you an SMS with your order's ETA shortly."
+          );
+        });
+    });
+
+  // Helper function to format text msg
+  function formatText(orders, orderId, num) {
+    let text = `Hello! You have a new order! \n \nOrder ID: ${orderId} \nFrom: ${num} \n\n`;
+    for (let order of orders) {
+      text += ` Item: ${order.name} \n - Amount: ${order.count} \n\n`;
     }
-  )
-  // helper function to format text msg
-  function formatText(orders, orderId, num)
-  {
-    let text = `Hello! You have a new order! \n \nOrder ID: ${orderId} \nFrom: ${num} \n \n`;
-     for(let order of orders)
-     {
-       text += ` Item: ${order.name} \n  - Amount: ${order.count} \n \n`;
-     }
-    text += `To notify the client, please reply with "${orderId}, <ETA minutes>". When the order is ready, please reply with "${orderId}".`
-     return text;
+    text += `To notify the client, please reply with "${orderId}, <ETA minutes>". When the order is ready, please reply with "${orderId}".`;
+    return text;
   }
   res.send("OK");
 });
 
 // Receive msg from owner and send out notification to client
 app.post("/twilio/webhook", (req, res) => {
-
-  if(!req.body["Body"].includes(",")){
-    knex("orders").update({"active": "false"}, "phonenumber").where({
-      id: req.body["Body"]
-    })
-    .then( (clientNum) => {
-      sendSMS( "+1" + clientNum[0], "You order is ready. Come pick it up!" )
-    })
-    .catch((err) => {
-    console.log("err ", err);
-    });
-
+  if (!req.body["Body"].includes(",")) {
+    knex("orders")
+      .update({ active: "false" }, "phonenumber")
+      .where({
+        id: req.body["Body"]
+      })
+      .then(clientNum => {
+        sendSMS("+1" + clientNum[0], "You order is ready. Come pick it up!");
+      })
+      .catch(err => {
+        console.log("err ", err);
+      });
   } else {
     let reply = req.body["Body"].split(",");
     let replyId = reply[0].trim();
     let eta = reply[1].trim();
 
-    knex("orders").update({"etaminutes": eta}, "phonenumber").where({
-      id: replyId
-    })
-    .then( (clientNum) => {
-      sendSMS( "+1" + clientNum[0], `You order will be ready in about ${eta} minutes.` )
-    })
-    .catch((err) => {
-    console.log("err ", err);
-    });
+    knex("orders")
+      .update({ etaminutes: eta }, "phonenumber")
+      .where({
+        id: replyId
+      })
+      .then(clientNum => {
+        sendSMS("+1" + clientNum[0],`You order will be ready in about ${eta} minutes.`
+        );
+      })
+      .catch(err => {
+        console.log("err ", err);
+      });
   }
-
 });
 
 app.listen(PORT, () => {
