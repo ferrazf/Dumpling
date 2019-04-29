@@ -58,6 +58,11 @@ app.get("/menu", (req, res) => {
   res.render("menu", templateVars);
 });
 
+// Owner Login page
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 // Checkout page
 app.get("/contact", (req, res) => {
   let templateVars =  {path: req.route.path};
@@ -112,7 +117,7 @@ app.post("/twilio/send", (req, res) => {
     for (let order of orders) {
       text += ` Item: ${order.name} \n - Amount: ${order.count} \n\n`;
     }
-    text += `To notify the client, please reply with "${orderId}, <ETA minutes>". When the order is ready, please reply with "${orderId}".`;
+    text += `To notify the client, please reply with "${orderId}, <ETA minutes>". When the order is ready, please only reply with "${orderId}".`;
     return text;
   }
   res.send("OK");
@@ -127,7 +132,7 @@ app.post("/twilio/webhook", (req, res) => {
         id: req.body["Body"]
       })
       .then(clientNum => {
-        sendSMS("+1" + clientNum[0], "You order is ready. Come pick it up!");
+        sendSMS("+1" + clientNum[0], `You order (order id: ${req.body["Body"]}) is ready. Come pick it up!`);
       })
       .catch(err => {
         console.log("err ", err);
