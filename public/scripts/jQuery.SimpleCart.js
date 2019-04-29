@@ -124,14 +124,6 @@
 
             });
 
-            // $(this.options.addtoCartClass).on("click", function (e) {
-            //     e.preventDefault();
-            //     var name = $(this).attr("data-name");
-            //     var cost = Number($(this).attr("data-price"));
-            //     mi._addItemToCart(name, cost, 1);
-            //     mi._updateCartDetails();
-            // });
-
             $(this.options.showcartID).on("change", this.options.itemCountClass, function (e) {
                 let ci = this;
                 e.preventDefault();
