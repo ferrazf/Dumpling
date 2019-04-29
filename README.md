@@ -33,6 +33,7 @@ Setup twilio and ngrok
   - Use twilio to send and receive message. 
   - Use ngrok to open the localhost port for twilio webhook to receive message. 
 
+
 ### Dependencies
 - dovenv 4.0.0 or above
 - express 4.15.3 or above
@@ -52,3 +53,8 @@ Setup twilio and ngrok
 !["Screenshot of log in page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/view_order_login.jpg)
 
 !["Screenshot of view order page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/view_order.jpg)
+
+## Know issues 
+
+- Login page is only demonstrational 
+ 
