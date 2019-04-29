@@ -43,7 +43,12 @@ Setup twilio and ngrok
 
 ## Screenshots 
 
+!["Screenshot of index page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/index.jpg)
 
+!["Screenshot of menu page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/menu.jpg)
 
+!["Screenshot of contact us page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/contact_us.jpg)
 
+!["Screenshot of log in page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/view_order_login.jpg)
 
+!["Screenshot of view order page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/view_order.jpg)
