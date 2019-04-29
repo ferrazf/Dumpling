@@ -18,6 +18,7 @@ const knexLogger  = require('knex-logger');
 const usersRoutes = require("./routes/users");
 const sendSMS = require('./public/scripts/send-sms');
 const itemsRoutes = require("./routes/menu_items");
+const ordersRoutes = require("./routes/orders");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -38,7 +39,10 @@ app.use("/styles", sass({
 
 app.use(express.static("public"));
 
-// Mount all resource routes
+// Get orders list from database
+app.use("/api/orders", ordersRoutes(knex));
+
+// Get menu items from database
 app.use("/api/menu_items", itemsRoutes(knex));
 
 let home = false;
@@ -58,6 +62,12 @@ app.get("/menu", (req, res) => {
 app.get("/contact", (req, res) => {
   let templateVars =  {path: req.route.path};
   res.render("contact", templateVars);
+});
+
+// Orders page
+app.get("/orders", (req, res) => {
+  let templateVars =  {path: req.route.path};
+  res.render("orders", templateVars);
 });
 
 // Confirmation page

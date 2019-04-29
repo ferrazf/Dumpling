@@ -3,6 +3,7 @@
  * Basis shopping cart using javascript/Jquery.
  *
  * Authour : Sirisha
+ * Modified By: Fernando Ferraz, Kobi Lee, Rachel Tang
  */
 
 

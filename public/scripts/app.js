@@ -15,7 +15,27 @@ $(() => {
     }
     $(".panel-body .row").append($newItems);
   });
+
+  $.ajax({
+    method: "GET",
+    url: "/api/orders"
+  }).done(orders => {
+    let $newOrders = [];
+
+    for (order of orders) {
+      $newOrders.push(
+        `<div class="col-sm-2 text-center table-data-row">${order.id}</div>
+        <div class="col-sm-3 text-center table-data-row">${order.name}</div>
+        <div class="col-sm-3 text-center table-data-row">${order.quantity}</div>
+        <div class="col-sm-2 text-center table-data-row">${order.phonenumber}</div>
+        <div class="col-sm-2 text-center table-data-row">${order.active}</div>`
+      );
+    }
+    $(".orderstable").append($newOrders);
+  });
+
 });
+
 
 
 $(document).ready(function () {
