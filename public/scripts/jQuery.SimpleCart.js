@@ -138,6 +138,7 @@
               e.preventDefault();
                 let phoneNumberEntered = $("#order-phone-number").val().split(" ").join("");
 
+              //Account for 10-digit or 11-digit number (with +1)
               if (phoneNumberEntered.length === 10 || phoneNumberEntered.length === 11) {
                 $.ajax({
                   type: "POST",
