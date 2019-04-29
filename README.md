@@ -57,4 +57,13 @@ Setup twilio and ngrok
 ## Know issues 
 
 - Login page is only demonstrational 
- 
+
+## To be implemented 
+
+- Add REACT front end
+- Implement login and registration to owner page
+- Manage orders directly from the orders page
+- Allow clients to view the status of their order on the website
+- Host the app on a public domain
+
+
