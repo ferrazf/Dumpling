@@ -114,6 +114,7 @@
                         },
                         dataType: "object",
                         })
+                        .then(alert("Hang in there. Your food is on the way."))
                         .then($("#order-phone-number").val(""))
                         .then(mi._clearCart())
                         .then(mi._updateCartDetails());
