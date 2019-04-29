@@ -545,14 +545,25 @@ right: 20px;
 top: -45px;
 }
 
-.input-group-prepend input {
+.owner-login-container input {
   background-color: #fff;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
+
+.owner-login-container input:focus {
+  background-color: #fff;
+  border-bottom: 3px solid #0c6dd8;
+}
+
+.login_btn {}
 
 .input-group-text {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     text-align: center;
+    background-color: #fff;
+    color: #ccc;
 }
 
 .input-group-text i {
@@ -584,15 +595,15 @@ margin-left: 15px;
 margin-right: 5px;
 }
 
-.login_btn{
+.burger input.login_btn{
 color: black;
 background-color: #FFC312;
 width: 100px;
 }
 
-.login_btn:hover{
+.burger input.login_btn:hover{
 color: black;
-background-color: white;
+background-color: rgb(201, 151, 2);
 }
 
 .links{
