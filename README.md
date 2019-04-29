@@ -10,11 +10,13 @@ An application built to simplify online food ordering for pickup.
 ### Expected Usage
 
 Desired users are restaurant owners and customers:
-- Restaurant owners will recieve a when an order is placed.
-  - The customer will then recieve a SMS with estimated preparation time.
+
+- Restaurant owners will recieve a SMS when an order is placed.
+  - The owners can send a SMS with estimated preparation time to notify customers.
 
 - Customers can order from the restaurant menu online.
-  - They are notified when the order has been accepted and how long it will take.
+  - They will be notified when the order has been accepted and how long it will take.
+  - They will be notified when the order is ready for pickup.
 
 
 ## Getting Started
@@ -26,6 +28,10 @@ Setup the database:
 
 Run the development web server using the 'npm start' command.
 
+Setup twilio and ngrok
+  - Sign up in twilio and ngrok to require authorization tokens and account sid. 
+  - Use twilio to send and receive message. 
+  - Use ngrok to open the localhost port for twilio webhook to receive message. 
 
 ### Dependencies
 - dovenv 4.0.0 or above
