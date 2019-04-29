@@ -58,6 +58,11 @@ app.get("/menu", (req, res) => {
   res.render("menu", templateVars);
 });
 
+// Owner Login page
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 // Checkout page
 app.get("/contact", (req, res) => {
   let templateVars =  {path: req.route.path};
