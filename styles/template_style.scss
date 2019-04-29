@@ -168,6 +168,7 @@ img.w3order-img {
   left: 8%;
   top: 12%;
 }
+
 div .instruction-step {
   display: block;
   text-transform: capitalize;
@@ -339,7 +340,7 @@ li.dropdown.open .dropdown-menu, li.w3pages.open .dropdown-menu {
 }
 
 .order-now-index {
-  background-color: rgba(5,135,226,0.48);
+  background-color: rgba(5, 135, 226, 0.48);
   margin-top: 9rem;
   color: #fff;
   border: 6px dotted #032a48;
@@ -357,7 +358,7 @@ li.dropdown.open .dropdown-menu, li.w3pages.open .dropdown-menu {
 
 .order-now-index:hover {
   cursor: pointer;
-  background-color: rgba(5,135,226,0.60);
+  background-color: rgba(5, 135, 226, 0.6);
 }
 
 .burger {
@@ -369,9 +370,20 @@ li.dropdown.open .dropdown-menu, li.w3pages.open .dropdown-menu {
   max-width: 76rem;
   margin: 2rem auto 0;
 }
+
 .orderstable {
   max-width: 76rem;
   margin: 0 auto;
+}
+
+.orderstable .badge {
+  max-width: 5em;
+  max-height: 2em;
+  margin: 0 auto;
+  font-weight: 600;
+  font-size: 1.07em;
+  padding-top: 0.55em;
+  font-family: 'Yantramanav', sans-serif;
 }
 
 .table-data-row {
@@ -383,12 +395,13 @@ li.dropdown.open .dropdown-menu, li.w3pages.open .dropdown-menu {
 }
 
 .table-data-head {
-  font-weight: 500;
+  font-weight: 600;
   margin: 0 0 1rem;
-  font-size: 1rem;
+  font-size: 0.92rem;
   border-bottom: 1px solid #dcdcdc;
   background-color: #f5cc03;
   padding: 0.24rem 0 0.2rem;
+  text-decoration: underline;
 }
 
 /* Contact Page */
@@ -433,7 +446,7 @@ li.dropdown.open .dropdown-menu, li.w3pages.open .dropdown-menu {
 
 /*-- badges --*/
 .badge-primary {
-  background-color: #03a9f4;
+  background-color: #0887e2;
 }
 
 .badge-success {
@@ -445,7 +458,7 @@ li.dropdown.open .dropdown-menu, li.w3pages.open .dropdown-menu {
 }
 
 .badge-danger {
-  background-color: #e51c23;
+  background-color: #ec4c4c;
 }
 
 /*-- social-icons --*/

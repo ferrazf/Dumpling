@@ -23,12 +23,15 @@ $(() => {
     let $newOrders = [];
 
     for (order of orders) {
+      let activeClass = (order.active) ? "badge badge-primary" : "badge badge-danger";
+      let activeHTML = (order.active) ? "Active" : "Inactive";
+
       $newOrders.push(
         `<div class="col-sm-2 text-center table-data-row">${order.id}</div>
         <div class="col-sm-3 text-center table-data-row">${order.name}</div>
         <div class="col-sm-3 text-center table-data-row">${order.quantity}</div>
         <div class="col-sm-2 text-center table-data-row">${order.phonenumber}</div>
-        <div class="col-sm-2 text-center table-data-row">${order.active}</div>`
+        <div class="col-sm-2 text-center table-data-row ${activeClass}">${activeHTML}</div>`
       );
     }
     $(".orderstable").append($newOrders);
