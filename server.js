@@ -67,14 +67,14 @@ app.get("/checkout/:id/confirm", (req, res) => {
 });
 
 // Inform owner and client about the coming order
-app.post('/twilio/send', (req, res) => {
+app.post("/twilio/send", (req, res) => {
 
   let orderInput = [{phonenumber: req.body["phonenum"], active: true}];
 
-  knex("orders").insert(orderInput, 'id')
+  knex("orders").insert(orderInput, "id")
   .then((result) => {
       let insertData = req.body["order"].map(x => { return {item_id_FK: x.itemid, order_id_FK: result[0], quantity: x.count}});
-      knex("orders_items").insert(insertData, 'order_id_FK')
+      knex("orders_items").insert(insertData, "order_id_FK")
       .then((orderResult) => {
           let msgToOwner = formatText(req.body["order"], orderResult[0], req.body["phonenum"]);
           sendSMS(process.env.OWNER_NUMBER, msgToOwner);
@@ -99,17 +99,17 @@ app.post('/twilio/send', (req, res) => {
 });
 
 // Receive msg from owner and send out notification to client
-app.post('/twilio/webhook', (req, res) => {
+app.post("/twilio/webhook", (req, res) => {
 
   if(!req.body["Body"].includes(",")){
-    knex('orders').update({'active': 'false'}, 'phonenumber').where({
+    knex("orders").update({"active": "false"}, "phonenumber").where({
       id: req.body["Body"]
     })
     .then( (clientNum) => {
-      sendSMS( "+1" + clientNum[0], `You order is ready. Come pick it up!` )
-    }) // add +1 at the beginning of the phone number
+      sendSMS( "+1" + clientNum[0], "You order is ready. Come pick it up!" )
+    }) 
     .catch((err) => {
-    console.log('err ', err);
+    console.log("err ", err);
     })
 
   } else {
@@ -117,14 +117,14 @@ app.post('/twilio/webhook', (req, res) => {
     let replyId = reply[0].trim();
     let eta = reply[1].trim();
 
-    knex('orders').update({'etaminutes': eta}, 'phonenumber').where({
+    knex("orders").update({"etaminutes": eta}, "phonenumber").where({
       id: replyId
     })
     .then( (clientNum) => {
       sendSMS( "+1" + clientNum[0], `You order will be ready in about ${eta} minutes.` )
-    }) // add +1 at the beginning of the phone number
+    }) 
     .catch((err) => {
-    console.log('err ', err);
+    console.log("err ", err);
     })
   }
 
