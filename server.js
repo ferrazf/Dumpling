@@ -78,12 +78,12 @@ app.post('/twilio/send', (req, res) => {
       .then((orderResult) => {
           let msgToOwner = formatText(req.body["order"], orderResult[0], req.body["phonenum"]);
           sendSMS(process.env.OWNER_NUMBER, msgToOwner);
-          sendSMS("+1" + req.body["phonenum"], "Your order has been placed. We will update you with the ETA. Thank you for choosing SOSFood.")
+          sendSMS("+1" + req.body["phonenum"], "Thank you for choosing SOSFood. Your order has been placed. We will update you with the ETA.")
         }
       )
     }
   )
-
+  // helper function to format text msg
   function formatText(orders, orderId, num)
   {
      let text = `Hello! You have an order (OrderId: ${orderId}) from ${num}. `;
@@ -113,7 +113,7 @@ app.post('/twilio/webhook', (req, res) => {
     })
 
   } else {
-    let reply = req.body["Body"].split(","); // reply format will be phonenumber (without +1) + ',' + wait time
+    let reply = req.body["Body"].split(",");
     let replyId = reply[0].trim();
     let eta = reply[1].trim();
 
@@ -130,10 +130,6 @@ app.post('/twilio/webhook', (req, res) => {
 
 });
 
-// app.get("/checkout/:id/confirm", (req, res) => {
-//   let templateVars =  {path: req.route.path};
-//   res.render("confirm", templateVars);
-// });
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
