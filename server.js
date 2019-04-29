@@ -94,7 +94,6 @@ app.post("/twilio/send", (req, res) => {
     text += `To notify the client, please reply with "${orderId}, <ETA minutes>". When the order is ready, please reply with "${orderId}".`
      return text;
   }
-
   res.send("OK");
 });
 
@@ -110,7 +109,7 @@ app.post("/twilio/webhook", (req, res) => {
     })
     .catch((err) => {
     console.log("err ", err);
-    })
+    });
 
   } else {
     let reply = req.body["Body"].split(",");
@@ -125,7 +124,7 @@ app.post("/twilio/webhook", (req, res) => {
     })
     .catch((err) => {
     console.log("err ", err);
-    })
+    });
   }
 
 });
