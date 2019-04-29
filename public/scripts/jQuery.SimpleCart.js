@@ -23,13 +23,15 @@
         itemCountClass : '.item-count'
     };
 
+    /* Item Construtor Function */
     function Item(itemid, name, price, count) {
         this.itemid = itemid;
         this.name = name;
         this.price = price;
         this.count = count;
     }
-    /*Constructor function*/
+
+    /*Cart Constructor Function*/
     function simpleCart(domEle, options) {
 
         /* Merge user settings with default, recursively */
@@ -42,8 +44,30 @@
         this.init();
     }
 
+    /* Helper Function - Display return of SMS POST request */
+    function updatePostMsgBox(isError, msg) {
+        let $pRetMsgEl = $(".post-return-msg");
+        let $pRetEl = $(".post-return-box");
 
-    /*plugin functions */
+        if ($pRetEl.css("display") != "none") {
+          $pRetEl.slideToggle(75);
+        }
+
+        if (isError) {
+            $pRetEl.removeClass("post-return-success");
+            $pRetEl.addClass("post-return-error");
+        } else {
+            $pRetEl.removeClass("post-return-error");
+            $pRetEl.addClass("post-return-success");
+        }
+
+          $pRetMsgEl.text(msg);
+
+        $pRetEl.slideToggle();
+        return;
+    }
+
+    /*Plugin Functions */
     $.extend(simpleCart.prototype, {
         init: function () {
             this._setupCart();
@@ -55,7 +79,8 @@
             this.cart_ele.addClass("cart-grid panel panel-defaults");
             this.cart_ele.append("<div class='panel-heading cart-heading'><div class='total-cart-count'>Your Cart: 0 items</div><div class='spacer'></div><i class='fa fa-dollar total-cart-cost'>0</i><div></div></div>")
             this.cart_ele.append("<div class='panel-body cart-body'><div class='cart-products-list' id='show-cart'><!-- Dynamic Code from Script comes here--></div></div>")
-            this.cart_ele.append("<div class='cart-summary-container'>\n\
+            this.cart_ele.append(
+              "<div class='cart-summary-container'>\n\
                                 <div class='cart-offer'></div>\n\
                                         <div class='cart-total-amount'>\n\
                                             <div>Total</div>\n\
@@ -68,10 +93,14 @@
                                                 <div class='input-group mb-2 mr-sm-2 mb-sm-0 sc-phone-number'>\n\
                                                 <div class='input-group-addon'><i class='fas fa-phone'></i></div>\n\
                                                 <input class='form-control' id='order-phone-number' placeholder='Your Phone Number'></input>\n\
+                                                <div class='post-return-box'>\n\
+                                                <span class='post-return-close' onclick=\"$('.post-return-box').slideToggle(200);\">&times;</span>\n\
+                                                <span class='post-return-msg'></span></div>\n\
                                                 </div><button type='submit' class='btn btn-primary sc-checkout'>Proceed To Checkout</button>\n\
                                             </form>\n\
                                         </div>\n\
-                                 </div>");
+                                 </div>"
+            );
 
             new Cleave('#order-phone-number', {
                 phone: true,
@@ -92,37 +121,44 @@
         _setEvents: function () {
             let mi = this;
 
-            $(".panel-body .row").on("click", this.options.addtoCartClass, function (e) {
+            $(".panel-body .row").on(
+              "click",
+              this.options.addtoCartClass,
+              function(e) {
                 e.preventDefault();
                 let elID = $(this).attr("data-id");
                 let name = $(this).attr("data-name");
                 let cost = Number($(this).attr("data-price"));
                 mi._addItemToCart(elID, name, cost, 1);
                 mi._updateCartDetails();
-            });
+              }
+            );
 
-            $(this.options.checkoutClass).on("click", function (e) {
-                e.preventDefault();
-                let phoneNumberEntered = $("#order-phone-number").val();
-                if (phoneNumberEntered.length === 10) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/twilio/send",
-                        data: {
-                            order: mi.cart,
-                            phonenum: phoneNumberEntered
-                        },
-                        dataType: "object",
-                        })
-                        .then(alert("Hang in there. Your food is on the way."))
-                        .then($("#order-phone-number").val(""))
-                        .then(mi._clearCart())
-                        .then(mi._updateCartDetails());
+            $(this.options.checkoutClass).on("click", function(e) {
+              e.preventDefault();
+                let phoneNumberEntered = $("#order-phone-number").val().split(" ").join("");
 
-                } else {
-                    alert("Please enter a valid phone number.");
-                };
-
+              //Account for 10-digit or 11-digit number (with +1)
+              if (phoneNumberEntered.length === 10 || phoneNumberEntered.length === 11) {
+                $.ajax({
+                  type: "POST",
+                  url: "/twilio/send",
+                  data: {
+                    order: mi.cart,
+                    phonenum: phoneNumberEntered
+                  },
+                  dataType: "object"
+                })
+                  .then(
+                    updatePostMsgBox(false, "Hang in there, your food is being prepared!")
+                  )
+                  .then($("#order-phone-number").val(""))
+                  .then(mi._clearCart())
+                  .then(mi._updateCartDetails());
+              } else {
+                updatePostMsgBox(true, "You must enter a valid phone number!");
+                return;
+              }
             });
 
             $(this.options.showcartID).on("change", this.options.itemCountClass, function (e) {
@@ -147,7 +183,7 @@
                 mi._updateCartDetails();
             });
         },
-        /* Helper Functions */
+        /* Async Helper Functions */
         _addItemToCart: function (elID, name, price, count) {
             for (let i in this.cart) {
                 if (this.cart[i].itemid == elID) {
