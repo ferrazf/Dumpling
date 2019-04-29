@@ -103,8 +103,8 @@
 
             $(this.options.checkoutClass).on("click", function (e) {
                 e.preventDefault();
-                let phoneNumberEntered = $("#order-phone-number").val().split(' ').join('');
-                if (phoneNumberEntered.length === 10 || phoneNumberEntered.length === 11) {
+                let phoneNumberEntered = $("#order-phone-number").val();
+                if (phoneNumberEntered.length === 10) {
                     $.ajax({
                         type: "POST",
                         url: "/twilio/send",
