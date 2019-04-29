@@ -11,8 +11,8 @@ An application built to simplify online food ordering for pickup.
 
 Desired users are restaurant owners and customers:
 
-- Restaurant owners will recieve a SMS when an order is placed.
-  - The owners can send a SMS with estimated preparation time to notify customers.
+- Restaurant owners will recieve an SMS when an order is placed.
+  - The owners can send an SMS with estimated preparation time to notify customers.
 
 - Customers can order from the restaurant menu online.
   - They will be notified when the order has been accepted and how long it will take.
