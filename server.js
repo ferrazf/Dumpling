@@ -78,7 +78,7 @@ app.post("/twilio/send", (req, res) => {
       .then((orderResult) => {
           let msgToOwner = formatText(req.body["order"], orderResult[0], req.body["phonenum"]);
           sendSMS(process.env.OWNER_NUMBER, msgToOwner);
-          sendSMS("+1" + req.body["phonenum"], "Thank you for choosing SOSFood. Your order has been placed. We will update you with the ETA.")
+          sendSMS("+1" + req.body["phonenum"], "Thank you for choosing SOSFood! Your order has been placed. We will send you an SMS with your order's ETA shortly.")
         }
       )
     }
@@ -86,12 +86,12 @@ app.post("/twilio/send", (req, res) => {
   // helper function to format text msg
   function formatText(orders, orderId, num)
   {
-     let text = `Hello! You have an order (OrderId: ${orderId}) from ${num}. `;
+    let text = `Hello! You have a new order! \n \nOrder ID: ${orderId} \nFrom: ${num} \n \n`;
      for(let order of orders)
      {
-        text += `item: ${order.name} Amount: ${order.count} \n`;
+       text += ` Item: ${order.name} \n  - Amount: ${order.count} \n \n`;
      }
-     text += ` Please reply with "OrderId , estimated preparation time" to notify the client. When the order is ready, please only reply the OrderId.`
+    text += `To notify the client, please reply with "${orderId}, <ETA minutes>". When the order is ready, please reply with "${orderId}".`
      return text;
   }
 
@@ -107,7 +107,7 @@ app.post("/twilio/webhook", (req, res) => {
     })
     .then( (clientNum) => {
       sendSMS( "+1" + clientNum[0], "You order is ready. Come pick it up!" )
-    }) 
+    })
     .catch((err) => {
     console.log("err ", err);
     })
@@ -122,7 +122,7 @@ app.post("/twilio/webhook", (req, res) => {
     })
     .then( (clientNum) => {
       sendSMS( "+1" + clientNum[0], `You order will be ready in about ${eta} minutes.` )
-    }) 
+    })
     .catch((err) => {
     console.log("err ", err);
     })
