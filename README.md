@@ -11,9 +11,14 @@ An application built to simplify online food ordering for pickup.
 
 Desired users are restaurant owners and customers:
 
+<<<<<<< HEAD
 - Restaurant owners will recieve a SMS when an order is placed.
   - The owners can send a SMS with estimated preparation time to notify customers.
   - The owners can log in to check the informtation and status of each order.
+=======
+- Restaurant owners will recieve an SMS when an order is placed.
+  - The owners can send an SMS with estimated preparation time to notify customers.
+>>>>>>> 69c61c548eb11f1c82f48cbd72ccb8edff5b85b1
 
 - Customers can order from the restaurant menu online.
   - They will be notified when the order has been accepted and how long it will take.
@@ -34,6 +39,7 @@ Setup twilio and ngrok
   - Use twilio to send and receive message. 
   - Use ngrok to open the localhost port for twilio webhook to receive message. 
 
+
 ### Dependencies
 - dovenv 4.0.0 or above
 - express 4.15.3 or above
@@ -53,3 +59,17 @@ Setup twilio and ngrok
 !["Screenshot of log in page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/view_order_login.jpg)
 
 !["Screenshot of view order page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/view_order.jpg)
+
+## Know issues 
+
+- Login page is only demonstrational 
+
+## To be implemented 
+
+- Add REACT front end
+- Implement login and registration to owner page
+- Manage orders directly from the orders page
+- Allow clients to view the status of their order on the website
+- Host the app on a public domain
+
+
