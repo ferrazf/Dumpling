@@ -13,6 +13,7 @@ Desired users are restaurant owners and customers:
 
 - Restaurant owners will recieve a SMS when an order is placed.
   - The owners can send a SMS with estimated preparation time to notify customers.
+  - The owners can log in to check the informtation and status of each order.
 
 - Customers can order from the restaurant menu online.
   - They will be notified when the order has been accepted and how long it will take.
