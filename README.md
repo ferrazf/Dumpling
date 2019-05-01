@@ -55,7 +55,7 @@ Setup twilio and ngrok
 
 !["Screenshot of view order page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/view_order.jpg)
 
-## Know issues 
+## Known Issues 
 
 - Login page is only demonstrational 
 
