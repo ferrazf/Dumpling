@@ -1,7 +1,7 @@
 # SOSFood
 
 ## About the Project
-SOSFood is a full stack web application built with Node, Express, AJAX, Twilio API, jQuery, HTML5, CSS3 and PosgreSQL.
+SOSFood is a full stack web application built with Node.js, Express, AJAX, Twilio API, jQuery, HTML5, CSS3 and PosgreSQL.
 
 ### Problem Statement
 
@@ -13,6 +13,7 @@ Desired users are restaurant owners and customers:
 
 - Restaurant owners will recieve a SMS when an order is placed.
   - The owners can send a SMS with estimated preparation time to notify customers.
+  - The owners can check the informtation and status of each order.
 
 - Customers can order from the restaurant menu online.
   - They will be notified when the order has been accepted and how long it will take.
@@ -33,6 +34,7 @@ Setup twilio and ngrok
   - Use twilio to send and receive message. 
   - Use ngrok to open the localhost port for twilio webhook to receive message. 
 
+
 ### Dependencies
 - dovenv 4.0.0 or above
 - express 4.15.3 or above
@@ -52,3 +54,17 @@ Setup twilio and ngrok
 !["Screenshot of log in page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/view_order_login.jpg)
 
 !["Screenshot of view order page"](https://github.com/ferrazf/Dumpling/blob/master/screenshots/view_order.jpg)
+
+## Known Issues 
+
+- Login page is only demonstrational 
+
+## To be implemented 
+
+- Add REACT front end
+- Implement login and registration to owner page
+- Manage orders directly from the orders page
+- Allow clients to view the status of their order on the website
+- Host the app on a public domain
+
+
