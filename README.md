@@ -1,7 +1,7 @@
 # SOSFood
 
 ## About the Project
-SOSFood is a full stack web application built with Node.js, Express, AJAX, Twilio API, jQuery, HTML5, CSS3 and PosgreSQL.
+SOSFood is a food-ordering application web application built with Node.js, Express, AJAX, Twilio API, jQuery, HTML5, CSS3 and PosgreSQL.
 
 ### Problem Statement
 
