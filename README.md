@@ -57,7 +57,7 @@ Setup twilio and ngrok
 
 ## Known Issues 
 
-- Login page is only demonstrational 
+- Login page is demonstrational 
 
 ## To be implemented 
 
