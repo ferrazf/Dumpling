@@ -9,7 +9,7 @@ An application built to simplify online food ordering for pickup.
 
 ### Expected Usage
 
-Desired users are restaurant owners and customers:
+Expected users are restaurant owners and customers:
 
 - Restaurant owners will recieve a SMS when an order is placed.
   - The owners can send a SMS with estimated preparation time to notify customers.
